@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    -webkit-user-select: initial;
+    user-select: initial;
+  }
+
+  html,body{height:100% !important;width:100% !important; margin:0px; padding:0px;}
