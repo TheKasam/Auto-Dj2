@@ -94,7 +94,7 @@ router.get('/callback', function(req, res) {
           // use the access token to access the Spotify Web API
           request.get(options, function(error, response, body) {
             console.log(body);
-
+            var json = body;
             var spotifyApi = new Spotify();
 
             spotifyApi.setAccessToken(access_token);
@@ -108,10 +108,6 @@ router.get('/callback', function(req, res) {
                   namedict[item["name"]] = itemurl[4];
                 });
 
-                dataBase.ref("users/"+userRecord.uid+"/").update({
-                  playlists: namedict,
-                  authcode: access_token
-                });
                 console.log(namedict);
                 });
           });
