@@ -112,12 +112,13 @@ router.get('/callback', function(req, res) {
                 });
           });
   
+          console.log("path");
+
+          console.log(req.path);
           // we can also pass the token to the browser to make requests from there
-          res.redirect('/#' +
-            querystring.stringify({
-              access_token: access_token,
-              refresh_token: refresh_token
-            }));
+          res.redirect("http://localhost:3000/playlists");
+
+
         } else {
           res.redirect('/#' +
             querystring.stringify({
