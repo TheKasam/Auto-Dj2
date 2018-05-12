@@ -5,6 +5,7 @@ var router = express.Router();
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+var Spotify = require('spotify-web-api-js');
 
 var client_id = '356fadb6961741c1ba6aac9966edbcbf'; // Your client id
 var client_secret = 'f3b9982a3e3347bfa60263d1d50fbbc2'; // Your secret
@@ -93,6 +94,26 @@ router.get('/callback', function(req, res) {
           // use the access token to access the Spotify Web API
           request.get(options, function(error, response, body) {
             console.log(body);
+
+            var spotifyApi = new Spotify();
+
+            spotifyApi.setAccessToken(access_token);
+
+              spotifyApi.getUserPlaylists(json["id"], function(err, data) {
+                if (err) console.error('err',err);
+                //else console.log( data['items'][1]);
+                var namedict = {};
+                data["items"].forEach(function(item){
+                  var itemurl = item["uri"].split(":");
+                  namedict[item["name"]] = itemurl[4];
+                });
+
+                dataBase.ref("users/"+userRecord.uid+"/").update({
+                  playlists: namedict,
+                  authcode: access_token
+                });
+                console.log(namedict);
+                });
           });
   
           // we can also pass the token to the browser to make requests from there
