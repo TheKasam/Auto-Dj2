@@ -10,7 +10,7 @@ var appRoutes = require('./routes/app');
 var authRoutes = require('./routes/auth');
 
 var app = express();
-mongoose.connect('mongodb://localhost:27017/node-angular')
+mongoose.connect('mongodb://localhost:27017/autodj');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,7 +30,6 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
     next();
 });
-
 
 app.use('/login', authRoutes);
 app.use('/', appRoutes);
