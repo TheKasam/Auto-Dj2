@@ -2,6 +2,9 @@
 console.log("pls");
 var express = require('express');
 var router = express.Router();
+var bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
+
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
@@ -10,6 +13,8 @@ var Spotify = require('spotify-web-api-js');
 var client_id = '356fadb6961741c1ba6aac9966edbcbf'; // Your client id
 var client_secret = 'f3b9982a3e3347bfa60263d1d50fbbc2'; // Your secret
 var redirect_uri = 'http://localhost:3000/login/callback'; // Your redirect uri
+
+var User = require('../models/user');
 
 /**
  * Generates a random string containing numbers and letters
@@ -38,7 +43,7 @@ router.get('/', function (req, res, next) {
     res.cookie(stateKey, state);
   
     // your application requests authorization
-    var scope = 'user-read-private user-read-email';
+    var scope = 'user-read-private user-read-email user-read-currently-playing user-modify-playback-state user-read-playback-state streaming playlist-read-private playlist-modify-private playlist-modify-public playlist-read-collaborative';
     res.redirect('https://accounts.spotify.com/authorize?' +
       querystring.stringify({
         response_type: 'code',
@@ -64,7 +69,9 @@ router.get('/callback', function(req, res) {
         querystring.stringify({
           error: 'state_mismatch'
         }));
-    } else {
+    } 
+    else {
+
       res.clearCookie(stateKey);
       var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
@@ -94,27 +101,36 @@ router.get('/callback', function(req, res) {
           // use the access token to access the Spotify Web API
           request.get(options, function(error, response, body) {
             console.log(body);
+
+
+            //register if not already a user
+            var name = body.display_name;
+            var email = body.email;
+            var accessToken = body.id;
+            console.log("auth code");
+            console.log(accessToken);
+
             var json = body;
             var spotifyApi = new Spotify();
 
             spotifyApi.setAccessToken(access_token);
 
-              spotifyApi.getUserPlaylists(json["id"], function(err, data) {
-                if (err) console.error('err',err);
-                //else console.log( data['items'][1]);
-                var namedict = {};
-                data["items"].forEach(function(item){
-                  var itemurl = item["uri"].split(":");
-                  namedict[item["name"]] = itemurl[4];
-                });
+            spotifyApi.getUserPlaylists(json["id"], function(err, data) {
 
-                console.log(namedict);
-                });
+              if (err) console.error('err',err);
+              //else console.log( data['items'][1]);
+              var namedict = {};
+
+              data["items"].forEach(function(item){
+                var itemurl = item["uri"].split(":");
+                namedict[item["name"]] = itemurl[4];
+              });
+
+              console.log(namedict);
+            });
+
           });
   
-          console.log("path");
-
-          console.log(req.path);
           // we can also pass the token to the browser to make requests from there
           res.redirect("http://localhost:3000/playlists");
 
