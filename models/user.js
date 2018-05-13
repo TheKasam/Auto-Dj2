@@ -8,7 +8,7 @@ var schema = new Schema({
     password: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     access_token: {type: String, required: false},
-    playlists: [{type: Schema.Types.ObjectId, ref: 'Message'}]
+    playlists: [{type: Schema.Types.ObjectId, ref: 'Playlist'}]
 });
 
 schema.plugin(mongooseUniqueValidator);
