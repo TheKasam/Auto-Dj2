@@ -100,17 +100,15 @@ router.get('/callback', function(req, res) {
   
           // use the access token to access the Spotify Web API
           request.get(options, function(error, response, body) {
-            console.log(body);
 
 
             //register if not already a user
             var name = body.display_name;
             var email = body.email;
             var userId = body.id;
-            console.log("auth code");
-            console.log(userId);
+          
 
-            router.post('/', function (req, res, next) {
+         
               var user = new User({
                   firstName: name,
                   email: email,
@@ -120,18 +118,17 @@ router.get('/callback', function(req, res) {
               });
               user.save(function(err, result) {
                   if (err) {
-                      return res.status(500).json({
-                          title: 'An error occurred',
-                          error: err
-                      });
+                      console.log(err);
+                      
                   }
-                  res.status(201).json({
-                      message: 'User created',
-                      obj: result
-                  });
+                  else {
+                    console.log("made");
+                  }
+                  
               });
-          });
+          
 
+          console.log(body);
 
 
             var json = body;
