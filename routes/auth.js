@@ -110,35 +110,25 @@ router.get('/callback', function(req, res) {
             console.log("auth code");
             console.log(userId);
 
-            User.findOne({email: email}, function(err, user) {
-              if (err) {
-                console.log(err);
-
-                  return res.status(500).json({
-                      title: 'An error occurred',
-                      error: err
+            router.post('/', function (req, res, next) {
+              var user = new User({
+                  firstName: name,
+                  email: email,
+                  pass_id: bcrypt.hashSync(userId, 10),
+                  access_token: access_token,
+                  refresh_token: refresh_token
+              });
+              user.save(function(err, result) {
+                  if (err) {
+                      return res.status(500).json({
+                          title: 'An error occurred',
+                          error: err
+                      });
+                  }
+                  res.status(201).json({
+                      message: 'User created',
+                      obj: result
                   });
-              }
-              if (!user) {
-                console.log("fail two");
-                  return res.status(401).json({
-                      title: 'Login failed',
-                      error: {message: 'Invalid login credentials'}
-                  });
-              }
-              if (!bcrypt.compareSync(req.body.password, user.password)) {
-                console.log("fail three");
-                  return res.status(401).json({
-                      title: 'Login failed',
-                      error: {message: 'Invalid login credentials'}
-                  });
-              }
-              console.log("wored!!!");
-              var token = jwt.sign({user: user}, 'secret', {expiresIn: 7200});
-              res.status(200).json({
-                  message: 'Successfully logged in',
-                  token: token,
-                  userId: user._id
               });
           });
 
