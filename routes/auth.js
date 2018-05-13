@@ -101,59 +101,47 @@ router.get('/callback', function(req, res) {
           // use the access token to access the Spotify Web API
           request.get(options, function(error, response, body) {
 
-
-            //register if not already a user
+            res.locals.body = body;
+            return next();
+            //Mark:- Register if not already a user
             var name = body.display_name;
             var email = body.email;
             var userId = body.id;
-          
-
-         
-              var user = new User({
-                  firstName: name,
-                  email: email,
-                  pass_id: bcrypt.hashSync(userId, 10),
-                  access_token: access_token,
-                  refresh_token: refresh_token
-              });
-              user.save(function(err, result) {
-                  if (err) {
-                      console.log(err);
-                      
-                  }
-                  else {
-                    console.log("made");
-                  }
+          var user = new User({
+              firstName: name,
+              email: email,
+              pass_id: bcrypt.hashSync(userId, 10),
+              access_token: access_token,
+              refresh_token: refresh_token
+          });
+          user.save(function(err, result) {
+              if (err) {
+                console.log("error");
+                console.log(err);
                   
-              });
-          
+              }
+              else {
+                console.log("made");
+                // var token = jwt.sign({user: user}, 'secret', {expiresIn: 7200});
+                // localStorage.setItem('token', data.token);
+              }
+              
+          });
 
+          var token = jwt.sign({user: user}, 'secret', {expiresIn: 7200});
+          res.status(200).json({
+              message: 'Successfully logged in',
+              token: token,
+              userId: user._id
+          });
+              
           console.log(body);
+          // res.redirect("http://localhost:3000/playlists");
 
-
-            var json = body;
-            var spotifyApi = new Spotify();
-
-            spotifyApi.setAccessToken(access_token);
-
-            spotifyApi.getUserPlaylists(json["id"], function(err, data) {
-
-              if (err) console.error('err',err);
-              //else console.log( data['items'][1]);
-              var namedict = {};
-
-              data["items"].forEach(function(item){
-                var itemurl = item["uri"].split(":");
-                namedict[item["name"]] = itemurl[4];
-              });
-
-              console.log(namedict);
-            });
 
           });
   
           // we can also pass the token to the browser to make requests from there
-          res.redirect("http://localhost:3000/playlists");
 
 
         } else {
@@ -165,5 +153,6 @@ router.get('/callback', function(req, res) {
       });
     }
   });
+
 
 module.exports = router;

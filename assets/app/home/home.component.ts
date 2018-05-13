@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from "../auth.service";
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -8,9 +11,22 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   bob = 'bob';
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
+
+  onSubmit() {
+    this.authService.signin()
+        .subscribe(
+            data => {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('userId', data.userId);
+                //go to playlists
+            },
+            error => console.error(error)
+        );
+    this.router.navigate(['playlists']);
+}
   
 }
