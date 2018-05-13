@@ -35,7 +35,7 @@ var stateKey = 'spotify_auth_state';
 
 var app = express();
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '../assets'))
    .use(cookieParser());
 
 router.get('/', function (req, res, next) {
@@ -106,9 +106,43 @@ router.get('/callback', function(req, res) {
             //register if not already a user
             var name = body.display_name;
             var email = body.email;
-            var accessToken = body.id;
+            var userId = body.id;
             console.log("auth code");
-            console.log(accessToken);
+            console.log(userId);
+
+            User.findOne({email: email}, function(err, user) {
+              if (err) {
+                console.log(err);
+
+                  return res.status(500).json({
+                      title: 'An error occurred',
+                      error: err
+                  });
+              }
+              if (!user) {
+                console.log("fail two");
+                  return res.status(401).json({
+                      title: 'Login failed',
+                      error: {message: 'Invalid login credentials'}
+                  });
+              }
+              if (!bcrypt.compareSync(req.body.password, user.password)) {
+                console.log("fail three");
+                  return res.status(401).json({
+                      title: 'Login failed',
+                      error: {message: 'Invalid login credentials'}
+                  });
+              }
+              console.log("wored!!!");
+              var token = jwt.sign({user: user}, 'secret', {expiresIn: 7200});
+              res.status(200).json({
+                  message: 'Successfully logged in',
+                  token: token,
+                  userId: user._id
+              });
+          });
+
+
 
             var json = body;
             var spotifyApi = new Spotify();
