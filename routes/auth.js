@@ -115,19 +115,51 @@ router.get('/callback', function(req, res) {
               access_token: access_token,
               refresh_token: refresh_token
           });
-          user.save(function(err, result) {
-              if (err) {
-                console.log("error");
+
+          
+          User.findOne({email: email}, function(err, user) {
+            if (err) {
+                console.log("error occurred");
                 console.log(err);
-                  
-              }
-              else {
-                console.log("made");
-                // var token = jwt.sign({user: user}, 'secret', {expiresIn: 7200});
-                // localStorage.setItem('token', data.token);
-              }
-              
+                
+            }
+            else if (!user) {
+              user.save(function(err, result) {
+                if (err) {
+                  return res.status(500).json({
+                    title: 'An error occurred',
+                    error: err
+                  });  
+                }
+                else {
+                  console.log("created user");
+                  res.redirect('/#' +
+                  querystring.stringify({
+                    access_token: access_token,
+                    refresh_token: refresh_token,
+                    id: result._id
+                  }));
+                }
+              });
+            } 
+            else {
+              console.log('user exists');
+              console.log(user);
+              user.access_token = access_token;
+              user.refresh_token = refresh_token;
+              user.save(function (err, result) {
+                  if (err) {
+                      return res.status(500).json({
+                          title: 'An error occurred',
+                          error: err
+                      });
+                  }
+                  console.log("updated message");
+              });
+              res.redirect('/#' + JSON.stringify({user:user._id}));
+            }
           });
+          
 
           // var token = jwt.sign({user: user}, 'secret', {expiresIn: 7200});
           // res.status(200).json({
@@ -143,11 +175,7 @@ router.get('/callback', function(req, res) {
           });
   
           // we can also pass the token to the browser to make requests from there
-          res.redirect('/#' +
-          querystring.stringify({
-            access_token: access_token,
-            refresh_token: refresh_token
-          }));
+         
 
         } else {
           res.redirect('/#' +
