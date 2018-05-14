@@ -4,3 +4,6 @@
 npm start #start server
 npm run build #start angular
 ./mongod #start mongo
+
+// sign out button
+// refresh button

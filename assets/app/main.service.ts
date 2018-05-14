@@ -13,8 +13,8 @@ export class MainService {
         return this.access_token;
     }
 
-    addPlaylist(playilst: string){
-        this.playlists.push(playilst);
+    addPlaylist(playlist: string){
+        this.playlists.push(playlist);
     }
     addButtonOption(token: string){
         this.access_token = token;
