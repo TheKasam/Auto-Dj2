@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from "../auth.service";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-playlists',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlaylistsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     // var json = body;
@@ -28,6 +30,7 @@ export class PlaylistsComponent implements OnInit {
 
     //     console.log(namedict);
     //   });
+    this.authService.getAccessToken(name);
   }
 
   name = localStorage.getItem('userId');

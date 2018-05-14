@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpModule } from "@angular/http";
+import {HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from './header/header.component';
@@ -27,7 +28,7 @@ const appRoutes: Routes =  [
         PlaylistsComponent,
         VoteComponent
     ],
-    imports: [BrowserModule, RouterModule.forRoot(appRoutes),HttpModule],
+    imports: [BrowserModule, RouterModule.forRoot(appRoutes),HttpModule,HttpClientModule],
     providers: [AuthService],
     bootstrap: [AppComponent]
 })
