@@ -30,7 +30,7 @@ export class PlaylistsComponent implements OnInit {
     //   });
   }
 
-  name = localStorage.getItem('name');
+  name = localStorage.getItem('userId');
 
 
 

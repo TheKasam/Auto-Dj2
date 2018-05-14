@@ -15,18 +15,17 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     if (this.router.url != "/" && this.router.url != "/home"){
-      console.log(this.router.url.split("%")[4]);
-      this.id = this.router.url.split("%")[4];
-      console.log((this.router.url));
+      this.id = this.router.url.substring(2,this.router.url.length);
+      console.log(this.router.url);
 
       // console.log(JSON.parse(this.router.url.substring(4, -4)));
       this.onSubmit();
-      
     }
   }
 
   id: string = "";
   onSubmit() {
+    console.log(this.id)
     this.authService.getToken(this.id)
         .subscribe(
             data => {

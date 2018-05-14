@@ -11,9 +11,9 @@ export class AuthService {
     getToken(userID: string) {
         const body = {id: userID};
         const headers = new Headers({'Content-Type': 'application/json'});
-        return this.http.post('http://localhost:3000/getToken', body, {headers: headers})
+        return this.http.post('http://localhost:3000/login/getToken', body, {headers: headers})
             .map((response: Response) => response.json())
-            .catch((error: Response) => Observable.throw("why"));
+            .catch((error: Response) => Observable.throw(error.json()));
     }
 
     logout() {

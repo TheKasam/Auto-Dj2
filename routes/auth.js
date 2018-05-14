@@ -133,12 +133,8 @@ router.get('/callback', function(req, res) {
                 }
                 else {
                   console.log("created user");
-                  res.redirect('/#' +
-                  querystring.stringify({
-                    access_token: access_token,
-                    refresh_token: refresh_token,
-                    id: result._id
-                  }));
+                  res.redirect('/#' + user._id.toString());
+
                 }
               });
             } 
@@ -156,7 +152,7 @@ router.get('/callback', function(req, res) {
                   }
                   console.log("updated message");
               });
-              res.redirect('/#' + JSON.stringify({user:user._id}));
+              res.redirect('/#' + user._id.toString());
             }
           });
           
