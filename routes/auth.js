@@ -91,7 +91,8 @@ router.get('/callback', function(req, res) {
   
           var access_token = body.access_token,
               refresh_token = body.refresh_token;
-  
+          console.log("token");
+          console.log(access_token);
           var options = {
             url: 'https://api.spotify.com/v1/me',
             headers: { 'Authorization': 'Bearer ' + access_token },
@@ -102,7 +103,7 @@ router.get('/callback', function(req, res) {
           request.get(options, function(error, response, body) {
 
             res.locals.body = body;
-            return next();
+            // return next();
             //Mark:- Register if not already a user
             var name = body.display_name;
             var email = body.email;
@@ -128,12 +129,12 @@ router.get('/callback', function(req, res) {
               
           });
 
-          var token = jwt.sign({user: user}, 'secret', {expiresIn: 7200});
-          res.status(200).json({
-              message: 'Successfully logged in',
-              token: token,
-              userId: user._id
-          });
+          // var token = jwt.sign({user: user}, 'secret', {expiresIn: 7200});
+          // res.status(200).json({
+          //     message: 'Successfully logged in',
+          //     token: token,
+          //     userId: user._id
+          // });
               
           console.log(body);
           // res.redirect("http://localhost:3000/playlists");
@@ -142,7 +143,11 @@ router.get('/callback', function(req, res) {
           });
   
           // we can also pass the token to the browser to make requests from there
-
+          res.redirect('/#' +
+          querystring.stringify({
+            access_token: access_token,
+            refresh_token: refresh_token
+          }));
 
         } else {
           res.redirect('/#' +

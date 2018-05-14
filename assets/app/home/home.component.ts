@@ -14,6 +14,9 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    if (this.router.url != "/"){
+      console.log(this.router.url.split("%")[1]);
+    }
   }
 
   onSubmit() {
