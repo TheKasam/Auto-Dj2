@@ -19,9 +19,10 @@ export class AuthService {
     }
 
     getAccessToken(userID: string){
+        console.log("Get acces token");
         let params = new HttpParams().set("id",userID) //Create new HttpParams
         const headers = new Headers({'Content-Type': 'application/json'});
-        return this.http.get('http://localhost:3000/login/getAccessToken:id', {headers: headers, params: params})
+        return this.http.get('http://localhost:3000/login/getAccessToken', {headers: headers, params: params})
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));
     }

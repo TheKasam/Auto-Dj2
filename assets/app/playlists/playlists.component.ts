@@ -30,13 +30,25 @@ export class PlaylistsComponent implements OnInit {
 
     //     console.log(namedict);
     //   });
-    this.authService.getAccessToken(name);
-  }
+    var name = localStorage.getItem('userId');
+
+    this.onSubmit() 
+ }
+  accessToken = "";
 
   name = localStorage.getItem('userId');
-
-
-
+  onSubmit() {
+    console.log(this.name)
+    this.authService.getAccessToken(this.name)
+        .subscribe(
+            data => {
+                this.accessToken = data.access_token;
+                
+                //go to playlists
+            },
+            error => console.error(error)
+        );
+  }
 
   // localStorage.setItem('name', name);
 

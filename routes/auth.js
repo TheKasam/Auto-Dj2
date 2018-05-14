@@ -218,12 +218,18 @@ router.post('/getToken', function(req, res, next) {
 });
 
 router.get('/getAccessToken', function(req, res) {
-  console.log(req.params.id);
   //check if user exists
   console.log();
-  console.log("getToken");
-  console.log(req.body.id);
-  User.findOne({_id: req.body.id}, function(err, user) {
+  console.log("getaccessToken");
+  // console.log(req.params("id"));
+ 
+
+  console.log("donw");
+  var id = JSON.parse(req.query.updates).value
+  console.log(id);
+  console.log(typeof id);
+
+  User.findOne({_id: id}, function(err, user) {
     if (err) {
         return res.status(500).json({
             title: 'An error occurred',
@@ -238,7 +244,6 @@ router.get('/getAccessToken', function(req, res) {
         });
     }
 
-    var token = jwt.sign({user: user}, 'secret', {expiresIn: 7200});
     res.status(200).json({
         message: 'Successfully logged in',
         access_token: user.access_token
