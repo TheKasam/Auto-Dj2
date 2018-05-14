@@ -8,10 +8,12 @@ import { Observable } from "rxjs";
 export class AuthService {
     constructor(private http: Http) {}
 
-    signin() {
-        return this.http.get('http://localhost:3000/login')
+    getToken(userID: string) {
+        const body = {id: userID};
+        const headers = new Headers({'Content-Type': 'application/json'});
+        return this.http.post('http://localhost:3000/getToken', body, {headers: headers})
             .map((response: Response) => response.json())
-            .catch((error: Response) => Observable.throw(error.json()));
+            .catch((error: Response) => Observable.throw("why"));
     }
 
     logout() {

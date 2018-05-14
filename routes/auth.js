@@ -189,6 +189,9 @@ router.get('/callback', function(req, res) {
 
   router.post('/getToken', function(req, res, next) {
     //check if user exists
+    console.log();
+    console.log("getToken");
+    console.log(req.body.id);
     User.findOne({_id: req.body.id}, function(err, user) {
       if (err) {
           return res.status(500).json({
@@ -197,6 +200,7 @@ router.get('/callback', function(req, res) {
           });
       }
       if (!user) {
+
           return res.status(401).json({
               title: 'Login failed',
               error: {message: 'user not found'}
