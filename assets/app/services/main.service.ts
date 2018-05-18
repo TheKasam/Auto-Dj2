@@ -5,7 +5,7 @@ import {HttpParams} from "@angular/common/http";
 import 'rxjs/Rx';
 import { Observable } from "rxjs";
 
-import { Playlist } from "./playlists/playlist.model";
+import { Playlist } from "../playlists/playlist.model";
 
 @Injectable()
 export class MainService {
