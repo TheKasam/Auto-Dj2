@@ -26,7 +26,9 @@ router.get('/getplaylists', function (req, res, next) {
             error: err
         });
       }
-      spotifyApi.getUserPlaylists(data.body.id,{ limit: 10, offset: 20 }, function(err, data) {
+      console.log(data.body);
+
+      spotifyApi.getUserPlaylists(data.body.id,{ limit: 30, offset: 0 }, function(err, data) {
 
         
 
@@ -38,7 +40,6 @@ router.get('/getplaylists', function (req, res, next) {
         }
         
         var playlistsArray = [];
-        console.log(data.body);
         
         data.body["items"].forEach(function(item){
           var itemurl = item.name
