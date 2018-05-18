@@ -8,7 +8,8 @@ var schema = new Schema({
     pass_id: {type: String, required: true},
     access_token: {type: String, required: false},
     refresh_token: {type: String, required: false},
-    playlists: [{type: Schema.Types.ObjectId, ref: 'Playlist'}]
+    current_playlist: {type: Schema.Types.ObjectId, ref: 'Playlist'},
+    songs_vote: [{type: Schema.Types.ObjectId, ref: 'Song'}]
 });
 
 schema.plugin(mongooseUniqueValidator);
