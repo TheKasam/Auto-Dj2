@@ -4,20 +4,28 @@ var SpotifyWebApi = require('spotify-web-api-node');
 
 router.get('/getplaylists', function (req, res, next) {
     console.log("query");
-    console.log(req.query);
-    var authId = JSON.parse(req.query.updates[0]);
-    var userId = JSON.parse(req.query.updates[1]);
 
+    var authId = JSON.parse(req.query.updates[0]).value
+    console.log("Accss id");
+    console.log(authId);
+    var userId = JSON.parse(req.query.updates[1]).value
 
+    var client_id = '356fadb6961741c1ba6aac9966edbcbf'; // Your client id
+    var client_secret = 'f3b9982a3e3347bfa60263d1d50fbbc2'; // Your secret
+    var redirect_uri = 'http://localhost:3000/login/callback'; // Your redirect uri
     var spotifyApi = new SpotifyWebApi({
-      clientId: userId
-        });
+      clientId: client_id,
+      clientSecret: client_secret,
+      redirectUri:redirect_uri
+    });
     spotifyApi.setAccessToken(authId);
-    spotifyApi.getMe()
+ // Get Elvis' albums
+    // Get multiple albums
+    spotifyApi.getAlbums(['3aORS9GEmg02j3cPNAgVdS', '3aORS9GEmg02j3cPNAgVdS'])
     .then(function(data) {
-      console.log('Some information about the authenticated user', data.body);
+      console.log('Albums information', data.body);
     }, function(err) {
-      console.log('Something went wrong!', err);
+      console.error(err);
     });
     // spotifyApi.getUserPlaylists("6220ecortl2kdhvliq37igyil",{ limit: 10, offset: 20 }, function(err, data) {
 
