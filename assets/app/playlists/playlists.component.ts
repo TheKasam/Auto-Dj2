@@ -18,14 +18,24 @@ export class PlaylistsComponent implements OnInit {
   }
   
   async start(){
+    await this.getUserId();
+    
     await this.getToken();
     // await this.getPlaylists(this.accessToken,this.name);
     // await this.printlol();
   }
-
+  getUserId(){
+    return new Promise(resolve => {
+      setTimeout(() => {
+        this.name = localStorage.getItem('userId');
+        console.log("name",this.name);
+        resolve();
+      }, 1);
+    });
+  }
   //Mark:- Variables
   accessToken = "";
-  name = localStorage.getItem('userId');
+  name = "bob";
   playlists: string[];
 
   getPlaylists(accessToken,userId){
@@ -57,7 +67,7 @@ export class PlaylistsComponent implements OnInit {
                   console.log("access token");
                   console.log(data.access_token);
                   this.accessToken = data.access_token;
-                  this.getPlaylists(this.accessToken, name);
+                  this.getPlaylists(this.accessToken, this.name);
                   //go to playlists
               },
               error => console.error(error)
