@@ -13,11 +13,16 @@ export class PlaylistsComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, private mainService: MainService) { }
 
   ngOnInit() {
-    this.getToken() 
-    this.getPlaylists(this.accessToken,this.name)
-    console.log(this.playlists);
+    this.start();
+    
   }
   
+  async start(){
+    await this.getToken();
+    // await this.getPlaylists(this.accessToken,this.name);
+    // await this.printlol();
+  }
+
   //Mark:- Variables
   accessToken = "";
   name = localStorage.getItem('userId');
@@ -32,18 +37,38 @@ export class PlaylistsComponent implements OnInit {
     );
   }
 
+  printlol(){
+    return new Promise(resolve => {
+      setTimeout(() => {
+        console.log(this.accessToken, "pls");
+        resolve();
+      }, 1);
+    });
+  }
+
 
   getToken() {
-    console.log(this.name)
-    this.authService.getAccessToken(this.name)
-      .subscribe(
-          data => {
-              this.accessToken = data.access_token;
-              
-              //go to playlists
-          },
-          error => console.error(error)
-       );
+    return new Promise(resolve => {
+      setTimeout(() => {
+        console.log(this.name)
+        this.authService.getAccessToken(this.name)
+          .subscribe(
+              data => {
+                  console.log("access token");
+                  console.log(data.access_token);
+                  this.accessToken = data.access_token;
+                  this.getPlaylists(this.accessToken, name);
+                  //go to playlists
+              },
+              error => console.error(error)
+           );
+
+        resolve();
+      }, 1);
+    });
+
+
+    
   }
 
   // localStorage.setItem('name', name);
