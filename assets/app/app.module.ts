@@ -11,6 +11,8 @@ import { PlaylistsComponent } from './playlists/playlists.component';
 import { VoteComponent } from './vote/vote.component';
 
 import { AuthService } from "./auth.service";
+import { MainService } from "./main.service";
+
 
 
 const appRoutes: Routes =  [
@@ -29,7 +31,7 @@ const appRoutes: Routes =  [
         VoteComponent
     ],
     imports: [BrowserModule, RouterModule.forRoot(appRoutes),HttpModule,HttpClientModule],
-    providers: [AuthService],
+    providers: [AuthService, MainService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

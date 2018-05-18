@@ -5,6 +5,7 @@ import {HttpParams} from "@angular/common/http";
 import 'rxjs/Rx';
 import { Observable } from "rxjs";
 
+@Injectable()
 export class MainService {
     constructor(private http: Http) {}
 
@@ -19,7 +20,6 @@ export class MainService {
 
         return this.http.get('http://localhost:3000/message', {headers: headers, params: params})
             .map((response: Response) => {
-                
                 const playlistFetch = response.json().obj;
                 // let transformedMessages: Message[] = [];
                 // for (let message of messages) {

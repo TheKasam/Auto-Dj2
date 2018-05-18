@@ -15,7 +15,8 @@ export class PlaylistsComponent implements OnInit {
   ngOnInit() {
     this.getToken() 
     this.getPlaylists(this.accessToken,this.name)
- }
+    console.log(this.playlists);
+  }
   //Mark:- Variables
   accessToken = "";
   name = localStorage.getItem('userId');

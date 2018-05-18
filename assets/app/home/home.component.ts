@@ -14,19 +14,21 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    console.log("log");
     if (this.router.url != "/" && this.router.url != "/home"){
       this.id = this.router.url.substring(2,this.router.url.length);
+      console.log("router url");
       console.log(this.router.url);
 
       // console.log(JSON.parse(this.router.url.substring(4, -4)));
-      this.onSubmit();
+      this.onSubmit(this.id);
     }
   }
 
   id: string = "";
-  onSubmit() {
+  onSubmit(id) {
     console.log(this.id)
-    this.authService.getToken(this.id)
+    this.authService.getToken(id)
         .subscribe(
             data => {
                 localStorage.setItem('token', data.token);
