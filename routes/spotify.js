@@ -49,6 +49,7 @@ router.get('/getplaylists', function (req, res, next) {
             name: name
           });
         });
+        console.log("playlistsArray");
 
         console.log(playlistsArray);
 
