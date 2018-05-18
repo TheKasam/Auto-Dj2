@@ -5,5 +5,10 @@ npm start #start server
 npm run build #start angular
 ./mongod #start mongo
 
+
+
+//to do:
+
 // sign out button
 // refresh button
+//get all user playlists
