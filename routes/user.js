@@ -3,8 +3,8 @@ var router = express.Router();
 var SpotifyWebApi = require('spotify-web-api-node');
 
 
-
-
+var request = require('request');
+var User = require('../models/user');
 
 router.get('/getAccessToken', function(req, res) {
     //check if user exists
