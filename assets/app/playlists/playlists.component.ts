@@ -3,6 +3,9 @@ import { AuthService } from "../auth.service";
 import { MainService } from "../main.service";
 import {Router} from '@angular/router';
 
+import { Playlist } from "./playlist.model";
+
+
 @Component({
   selector: 'app-playlists',
   templateUrl: './playlists.component.html',
@@ -17,6 +20,11 @@ export class PlaylistsComponent implements OnInit {
     
   }
   
+  //Mark:- Variables
+  accessToken = "";
+  name = "bob";
+  playlists: Playlist[];
+
   async start(){
     await this.getUserId();
     
@@ -33,15 +41,12 @@ export class PlaylistsComponent implements OnInit {
       }, 1);
     });
   }
-  //Mark:- Variables
-  accessToken = "";
-  name = "bob";
-  playlists: string[];
+
 
   getPlaylists(accessToken,userId){
     this.mainService.getPlaylists(accessToken,userId)
     .subscribe(
-        (playlistsArr: string[]) => {
+        (playlistsArr: Playlist[]) => {
             this.playlists = playlistsArr;
         }
     );

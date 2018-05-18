@@ -42,8 +42,12 @@ router.get('/getplaylists', function (req, res, next) {
         var playlistsArray = [];
         
         data.body["items"].forEach(function(item){
-          var itemurl = item.name
-          playlistsArray.push(itemurl);
+          var name = item.name;
+          var id = item.id;
+          playlistsArray.push({ 
+            id: id,
+            name: name
+          });
         });
 
         console.log(playlistsArray);
