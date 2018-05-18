@@ -99,7 +99,15 @@ router.get('/callback', function(req, res) {
           };
   
           // use the access token to access the Spotify Web API
-          request.get(options, function(error, response, body) {
+          request.get(options, function(error, response, body) 
+          {
+
+            if (error){
+              return res.status(500).json({
+                title: 'An error occurred',
+                error: err
+                });
+            }
 
             res.locals.body = body;
             // return next();
@@ -120,6 +128,10 @@ router.get('/callback', function(req, res) {
             if (err) {
                 console.log("error occurred");
                 console.log(err);
+                return res.status(500).json({
+                  title: 'An error occurred',
+                  error: err
+                  });
                 
             }
             else if (!user) {
@@ -142,18 +154,19 @@ router.get('/callback', function(req, res) {
             else {
               console.log('user exists');
               console.log(user);
-              userToSave.access_token = access_token;
-              userToSave.refresh_token = refresh_token;
-              userToSave.save(function (err, result) {
+              user.access_token = access_token;
+              user.refresh_token = refresh_token;
+              user.save(function (err, result) {
                   if (err) {
                       return res.status(500).json({
                           title: 'An error occurred',
                           error: err
                       });
                   }
-                  console.log("updated message");
               });
-              res.redirect('/#' + userToSave._id.toString());
+              console.log("updated message");
+
+              res.redirect('/#' + user._id.toString());
             }
           });
           
