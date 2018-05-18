@@ -107,7 +107,7 @@ router.get('/callback', function(req, res) {
             var name = body.display_name;
             var email = body.email;
             var userId = body.id;
-            var user = new User({
+            var userToSave = new User({
               firstName: name,
               email: email,
               pass_id: bcrypt.hashSync(userId, 10),
@@ -123,7 +123,9 @@ router.get('/callback', function(req, res) {
                 
             }
             else if (!user) {
-              user.save(function(err, result) {
+              userToSave.access_token = access_token;
+              userToSave.refresh_token = refresh_token;
+              userToSave.save(function(err, result) {
                 if (err) {
                   return res.status(500).json({
                     title: 'An error occurred',
@@ -132,7 +134,7 @@ router.get('/callback', function(req, res) {
                 }
                 else {
                   console.log("created user");
-                  res.redirect('/#' + user._id.toString());
+                  res.redirect('/#' + userToSave._id.toString());
 
                 }
               });
@@ -140,9 +142,9 @@ router.get('/callback', function(req, res) {
             else {
               console.log('user exists');
               console.log(user);
-              user.access_token = access_token;
-              user.refresh_token = refresh_token;
-              user.save(function (err, result) {
+              userToSave.access_token = access_token;
+              userToSave.refresh_token = refresh_token;
+              userToSave.save(function (err, result) {
                   if (err) {
                       return res.status(500).json({
                           title: 'An error occurred',
@@ -151,7 +153,7 @@ router.get('/callback', function(req, res) {
                   }
                   console.log("updated message");
               });
-              res.redirect('/#' + user._id.toString());
+              res.redirect('/#' + userToSave._id.toString());
             }
           });
           
