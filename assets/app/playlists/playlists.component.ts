@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../auth.service";
+import { MainService } from "../main.service";
 import {Router} from '@angular/router';
 
 @Component({
@@ -9,45 +10,38 @@ import {Router} from '@angular/router';
 })
 export class PlaylistsComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private mainService: MainService) { }
 
   ngOnInit() {
-    // var json = body;
-    // var spotifyApi = new Spotify();
-
-    // spotifyApi.setAccessToken(access_token);
-
-    // spotifyApi.getUserPlaylists(json["id"], function(err, data) {
-
-    //     if (err) console.error('err',err);
-    //     //else console.log( data['items'][1]);
-    //     var namedict = {};
-
-    //     data["items"].forEach(function(item){
-    //       var itemurl = item["uri"].split(":");
-    //       namedict[item["name"]] = itemurl[4];
-    //     });
-
-    //     console.log(namedict);
-    //   });
-    var name = localStorage.getItem('userId');
-
-    this.onSubmit() 
+    this.getToken() 
+    this.getPlaylists(this.accessToken,this.name)
  }
+  //Mark:- Variables
   accessToken = "";
-
   name = localStorage.getItem('userId');
-  onSubmit() {
+  playlists: string[];
+
+  getPlaylists(accessToken,userId){
+    this.mainService.getPlaylists(accessToken,userId)
+    .subscribe(
+        (playlistsArr: string[]) => {
+            this.playlists = playlistsArr;
+        }
+    );
+  }
+
+
+  getToken() {
     console.log(this.name)
     this.authService.getAccessToken(this.name)
-        .subscribe(
-            data => {
-                this.accessToken = data.access_token;
-                
-                //go to playlists
-            },
-            error => console.error(error)
-        );
+      .subscribe(
+          data => {
+              this.accessToken = data.access_token;
+              
+              //go to playlists
+          },
+          error => console.error(error)
+       );
   }
 
   // localStorage.setItem('name', name);

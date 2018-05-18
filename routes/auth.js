@@ -89,8 +89,7 @@ router.get('/callback', function(req, res) {
       request.post(authOptions, function(error, response, body) {
         if (!error && response.statusCode === 200) {
   
-          var access_token = body.access_token,
-              refresh_token = body.refresh_token;
+          var access_token = body.access_token, refresh_token = body.refresh_token;
           console.log("token");
           console.log(access_token);
           var options = {
@@ -108,7 +107,7 @@ router.get('/callback', function(req, res) {
             var name = body.display_name;
             var email = body.email;
             var userId = body.id;
-          var user = new User({
+            var user = new User({
               firstName: name,
               email: email,
               pass_id: bcrypt.hashSync(userId, 10),

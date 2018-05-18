@@ -3,7 +3,9 @@ var router = express.Router();
 var Spotify = require('spotify-web-api-js');
 
 router.get('/getplaylists', function (req, res, next) {
-    var json = body;
+    var id = JSON.parse(req.query.updates);
+    console.log(req.query.updates);
+
     var spotifyApi = new Spotify();
 
     spotifyApi.setAccessToken(access_token);
@@ -12,15 +14,27 @@ router.get('/getplaylists', function (req, res, next) {
 
         if (err) console.error('err',err);
         //else console.log( data['items'][1]);
-        var namedict = {};
+        var playlistsArray = {};
 
         data["items"].forEach(function(item){
           var itemurl = item["uri"].split(":");
-          namedict[item["name"]] = itemurl[4];
+          playlistsArray[item["name"]] = itemurl[4];
         });
 
-        console.log(namedict);
-      });
+        console.log(playlistsArray);
+
+        if (err) {
+          return res.status(500).json({
+              title: 'An error occurred',
+              error: err
+          });
+        }
+        res.status(200).json({
+          message: 'Success',
+          obj: playlistsArray
+        });
+
+    });
 });
 
 module.exports = router;
