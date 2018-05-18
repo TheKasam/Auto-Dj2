@@ -5,8 +5,7 @@
   2
   {{accessToken}}
   3
-  <div *ngFor="let output of playlists; let i = index">
-    <button type="button" class="btn btn-success">{{output.name}}</button>
-
+  <div *ngFor="let playlist of playlists; let i = index">
+    <button type="button" (click)="selectPlaylist(playlist)" class="btn btn-success">{{playlist.name}}</button>
   </div>
 </span>

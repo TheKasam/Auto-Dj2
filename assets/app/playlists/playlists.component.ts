@@ -16,8 +16,8 @@ export class PlaylistsComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, private mainService: MainService) { }
 
   ngOnInit() {
+    //async function
     this.start();
-    
   }
   
   //Mark:- Variables
@@ -29,8 +29,7 @@ export class PlaylistsComponent implements OnInit {
     await this.getUserId();
     
     await this.getToken();
-    // await this.getPlaylists(this.accessToken,this.name);
-    // await this.printlol();
+
   }
   getUserId(){
     return new Promise(resolve => {
@@ -41,27 +40,6 @@ export class PlaylistsComponent implements OnInit {
       }, 1);
     });
   }
-
-
-  getPlaylists(accessToken,userId){
-    this.mainService.getPlaylists(accessToken,userId)
-    .subscribe(
-        (playlistsArr: Playlist[]) => {
-            this.playlists = playlistsArr;
-        }
-    );
-  }
-
-  printlol(){
-    return new Promise(resolve => {
-      setTimeout(() => {
-        console.log(this.accessToken, "pls");
-        resolve();
-      }, 1);
-    });
-  }
-
-
   getToken() {
     return new Promise(resolve => {
       setTimeout(() => {
@@ -77,13 +55,26 @@ export class PlaylistsComponent implements OnInit {
               },
               error => console.error(error)
            );
-
         resolve();
       }, 1);
     });
+  }
+  //called in get Token
+  getPlaylists(accessToken,userId){
+    this.mainService.getPlaylists(accessToken,userId)
+    .subscribe(
+        (playlistsArr: Playlist[]) => {
+            this.playlists = playlistsArr;
+        }
+    );
+  }
 
 
-    
+  selectPlaylist(playlist){
+    //set as current playlistfor user
+    console.log(playlist.id);
+    //navigate to vote page
+    // this.router.navigate(['vote']);
   }
 
   // localStorage.setItem('name', name);
