@@ -3,7 +3,10 @@ var router = express.Router();
 var Spotify = require('spotify-web-api-js');
 
 router.get('/getplaylists', function (req, res, next) {
+  console.log("query");
+
     var id = JSON.parse(req.query.updates);
+
     console.log(req.query.updates);
 
     var spotifyApi = new Spotify();

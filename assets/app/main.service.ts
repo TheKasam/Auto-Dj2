@@ -18,7 +18,7 @@ export class MainService {
         let params = new HttpParams().set("authId",authId).set("userID",userId);
         const headers = new Headers({'Content-Type': 'application/json'});
 
-        return this.http.get('http://localhost:3000/message', {headers: headers, params: params})
+        return this.http.get('http://localhost:3000/spotify/getplaylists', {headers: headers, params: params})
             .map((response: Response) => {
                 const playlistFetch = response.json().obj;
                 // let transformedMessages: Message[] = [];
