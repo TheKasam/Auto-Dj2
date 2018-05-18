@@ -1,9 +1,11 @@
-<p>
+<span>
   Playlists
   1
   {{name}}
   2
   {{accessToken}}
   3
-  {{playlists}}
-</p>
+  <div *ngFor="let output of playlists; let i = index">
+    <p>{{output}}</p>
+  </div>
+</span>

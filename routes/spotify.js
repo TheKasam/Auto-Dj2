@@ -19,8 +19,14 @@ router.get('/getplaylists', function (req, res, next) {
     });
 
     spotifyApi.setAccessToken(authId);
-
-    spotifyApi.getUserPlaylists(userId,{ limit: 10, offset: 20 }, function(err, data) {
+    spotifyApi.getMe( function(err, data) {
+      if (err) {
+        return res.status(500).json({
+            title: 'An error occurred',
+            error: err
+        });
+      }
+      spotifyApi.getUserPlaylists(data.body.id,{ limit: 10, offset: 20 }, function(err, data) {
 
         
 
@@ -30,22 +36,26 @@ router.get('/getplaylists', function (req, res, next) {
               error: err
           });
         }
+        
+        var playlistsArray = [];
         console.log(data.body);
-        // var playlistsArray = {};
-        // console.log(data);
-        // data["items"].forEach(function(item){
-        //   var itemurl = item["uri"].split(":");
-        //   playlistsArray[item["name"]] = itemurl[4];
-        // });
+        
+        data.body["items"].forEach(function(item){
+          var itemurl = item.name
+          playlistsArray.push(itemurl);
+        });
 
-        // console.log(playlistsArray);
+        console.log(playlistsArray);
 
-        // res.status(200).json({
-        //   message: 'Success',
-        //   obj: playlistsArray
-        // });
+        res.status(200).json({
+          message: 'Success',
+          obj: playlistsArray
+        });
 
+      });
     });
+        
+    
 });
 
 module.exports = router;
