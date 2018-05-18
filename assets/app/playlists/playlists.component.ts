@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from "../auth.service";
-import { MainService } from "../main.service";
+import { AuthService } from "../services/auth.service";
+import { MainService } from "../services/main.service";
 import {Router} from '@angular/router';
 
 import { Playlist } from "./playlist.model";
@@ -74,7 +74,7 @@ export class PlaylistsComponent implements OnInit {
     //set as current playlistfor user
     console.log(playlist.id);
     //navigate to vote page
-    // this.router.navigate(['vote']);
+    //this.router.navigate(['vote']);
   }
 
   // localStorage.setItem('name', name);

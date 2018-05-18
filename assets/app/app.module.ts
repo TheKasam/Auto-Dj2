@@ -10,8 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { PlaylistsComponent } from './playlists/playlists.component';
 import { VoteComponent } from './vote/vote.component';
 
-import { AuthService } from "./auth.service";
-import { MainService } from "./main.service";
+import { AuthService } from "./services/auth.service";
+import { MainService } from "./services/main.service";
 
 
 
