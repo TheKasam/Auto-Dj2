@@ -77,9 +77,9 @@ export class PlaylistsComponent implements OnInit {
         data => console.log(data),
         error => console.error(error)
       );    
-    console.log(playlist.id);
-    //navigate to vote page
-    // this.router.navigate(['vote']);
+      console.log(playlist.id);
+      //navigate to vote page
+      // this.router.navigate(['vote']);
   }
 
   // localStorage.setItem('name', name);

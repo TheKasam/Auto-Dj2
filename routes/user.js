@@ -70,41 +70,52 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
                 error: err
             });
         }
-        if (!user) {
+        else if (!user) {
   
             return res.status(401).json({
                 title: 'Login failed',
                 error: {message: 'user not found'}
             });
         }
-        if (user._id != decoded.user._id) {
+        else if (user._id != decoded.user._id) {
             return res.status(401).json({
                 title: 'Not Authenticated',
                 error: {message: 'Users do not match'}
             });
-        }
-        console.log("bef pla");
-        var playlist = new Playlist({
-            name: JSON.parse(playlist).name,
-            id: JSON.parse(playlist).id,
-            user: user
-        });
-        console.log("after pla");
-        playlist.save(function (err, result) {
-            if (err) {
-                return res.status(500).json({
-                    title: 'An error occurred2',
+        } else {
+            console.log("bef pla");
+            var playlistToSave = new Playlist({
+                name: JSON.parse(playlist).name,
+                id: JSON.parse(playlist).id,
+                user: user
+            });
+            console.log(JSON.parse(playlist).name);
+            playlistToSave.save(function(err, result) {
+                if (err) {
+                  return res.status(500).json({
+                    title: 'An error occurred',
                     error: err
-                });
-            }
-            user.current_playlist = result;
-            user.save();
+                  });  
+                }
+                else {
+                  console.log("created user");
+                }
+              });
+            user.save(function (err, result) {
+                if (err) {
+                    return res.status(500).json({
+                        title: 'An error occurred',
+                        error: err
+                    });
+                }
+            });
+            console.log(user);
             res.status(201).json({
-                message: 'Saved playlist',
-                obj: result
-            });  
-        });
- 
+                message: 'Saved message',
+                obj: user
+            });
+        }
+
         console.log("found");
         
     });
