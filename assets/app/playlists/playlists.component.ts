@@ -44,7 +44,7 @@ export class PlaylistsComponent implements OnInit {
     return new Promise(resolve => {
       setTimeout(() => {
         console.log(this.name)
-        this.authService.getAccessToken(this.name)
+        this.mainService.getAccessToken(this.name)
           .subscribe(
               data => {
                   console.log("access token");
