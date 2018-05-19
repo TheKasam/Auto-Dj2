@@ -7,6 +7,7 @@ var jwt = require('jsonwebtoken');
 var request = require('request');
 var User = require('../models/user');
 var ShareableCode = require('../models/code');
+var Playlist = require('../models/playlist');
 
 router.get('/getAccessToken', function(req, res) {
     //check if user exists
@@ -52,11 +53,8 @@ router.use('/', function (req, res, next) {
     })
 });
 
-
-
 router.post('/setCurrentPlaylist', function (req, res, next) {
-    console.log("req");
-    console.log(req.body.params);
+   
     var token = req.body.params.updates[1].value
     var playlist = req.body.params.updates[0].value
     var id = req.body.params.updates[2].value
@@ -92,23 +90,30 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
             console.log(JSON.parse(playlist).name);
             playlistToSave.save(function(err, result) {
                 if (err) {
+                  console.log("could not save");
                   return res.status(500).json({
                     title: 'An error occurred',
                     error: err
                   });  
                 }
                 else {
-                  console.log("created user");
+                    console.log("TO SAVE USER");
+                    user.current_playlist = result;
+                    user.save(function (err, result) {
+                        if (err) {
+                            console.log("user not saved");
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        } else {
+                            console.log("saved user");
+                        }
+                    });
+                  console.log("saved playlists maybe");
                 }
               });
-            user.save(function (err, result) {
-                if (err) {
-                    return res.status(500).json({
-                        title: 'An error occurred',
-                        error: err
-                    });
-                }
-            });
+              
             console.log(user);
             res.status(201).json({
                 message: 'Saved playlist',
@@ -152,11 +157,13 @@ router.post('/setShareableCode', function (req, res, next) {
             });
         } else {
             console.log("bef pla");
+            console.log(JSON.parse(code));
+            console.log(user);
             var codeToSave = new ShareableCode({
-                code: code,
+                code: JSON.parse(code),
                 user: user
             });
-            console.log(JSON.parse(playlist).name);
+            console.log("after");
             codeToSave.save(function(err, result) {
                 if (err) {
                   return res.status(500).json({

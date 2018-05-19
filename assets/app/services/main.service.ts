@@ -60,5 +60,19 @@ export class MainService {
                 return response.json().message})
             .catch((error: Response) => Observable.throw(error.json()));
     }
+
+    setCode(code: String, userID: String){
+        const headers = new Headers({'Content-Type': 'application/json'});
+        const codeStringify = JSON.stringify(code);
+        const token = localStorage.getItem('token')
+            ? '' + localStorage.getItem('token')
+            : '';
+        
+        let params = new HttpParams().set("code",codeStringify).set("token",token).set("id",String(userID));
+        return this.http.post('http://localhost:3000/user/setShareableCode', {headers: headers, params: params})
+            .map((response: Response) => {
+                return response.json().message})
+            .catch((error: Response) => Observable.throw(error.json()));
+    }
     
 }

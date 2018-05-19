@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from "../services/auth.service";
+import { MainService } from "../services/main.service";
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-vote',
@@ -7,14 +11,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VoteComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private mainService: MainService) { }
 
   ngOnInit() {
-    this.code  = this.randomCodeGenerator()
+    //this.code  = this.randomCodeGenerator()
+    this.name = localStorage.getItem('userId');
+    this.setCode(this.code);
   }
-  
+  name = "bob";
   current_songs = ["molly","fear","psycho"]
-  code = "";
+  code = "bob342";
+
   randomCodeGenerator(){
     length = 5
     var text = '';
@@ -26,5 +33,16 @@ export class VoteComponent implements OnInit {
     return text;
   }
 
+  setCode(code){
+    //set as current playlistfor user
+    this.mainService.setCode(code,this.name)
+      .subscribe(
+        data => console.log(data),
+        error => console.error(error)
+      );    
+      console.log(code);
+      //navigate to vote page
+      // this.router.navigate(['vote']);
+  }
 
 }
