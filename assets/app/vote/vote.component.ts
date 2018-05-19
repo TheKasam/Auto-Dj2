@@ -14,13 +14,13 @@ export class VoteComponent implements OnInit {
   constructor(private router: Router, private mainService: MainService) { }
 
   ngOnInit() {
-    this.code  = this.randomCodeGenerator()
-    this.name = localStorage.getItem('userId');
+   // this.name = localStorage.getItem('userId');
     this.setCode(this.code);
   }
-  name = "bob";
-  current_songs = ["molly","fear","psycho"]
-  code = "bob342";
+  name = localStorage.getItem('userId');
+  current_songs = ["molly","fear","psycho"];
+  code = this.randomCodeGenerator();
+  randNum = Math.floor((Math.random() * 3) + 0);
 
   randomCodeGenerator(){
     length = 5
