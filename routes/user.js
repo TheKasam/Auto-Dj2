@@ -102,8 +102,7 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
             res.status(201).json({
                 message: 'Saved playlist',
                 obj: result
-            });
-            
+            });  
         });
  
         console.log("found");
