@@ -8,7 +8,7 @@ var schema = new Schema({
     pass_id: {type: String, required: true},
     access_token: {type: String, required: false},
     refresh_token: {type: String, required: false},
-    test: {type: String, required: false,default: 'test'},
+    shareable_code: {type: Schema.Types.ObjectId, ref: 'Code'},
     current_playlist: {type: Schema.Types.ObjectId, ref: 'Playlist'},
     songs_vote: [{type: Schema.Types.ObjectId, ref: 'Song'}]
 });
