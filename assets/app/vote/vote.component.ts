@@ -14,7 +14,7 @@ export class VoteComponent implements OnInit {
   constructor(private router: Router, private mainService: MainService) { }
 
   ngOnInit() {
-    //this.code  = this.randomCodeGenerator()
+    this.code  = this.randomCodeGenerator()
     this.name = localStorage.getItem('userId');
     this.setCode(this.code);
   }

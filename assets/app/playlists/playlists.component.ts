@@ -79,7 +79,7 @@ export class PlaylistsComponent implements OnInit {
       );    
       console.log(playlist.id);
       //navigate to vote page
-      // this.router.navigate(['vote']);
+      this.router.navigate(['vote']);
   }
 
   // localStorage.setItem('name', name);

@@ -172,19 +172,21 @@ router.post('/setShareableCode', function (req, res, next) {
                   });  
                 }
                 else {
+                    user.shareable_code = result;
+                    user.save(function (err, result) {
+                        if (err) {
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        } else {
+                            console.log("saved code to use");
+                        }
+                    });
                   console.log("saved code");
                 }
               });
-            user.save(function (err, result) {
-                if (err) {
-                    return res.status(500).json({
-                        title: 'An error occurred',
-                        error: err
-                    });
-                } else {
-                    console.log("saved code to use");
-                }
-            });
+            
             console.log(user);
             res.status(201).json({
                 message: 'Saved code',
