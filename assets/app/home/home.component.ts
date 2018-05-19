@@ -32,6 +32,8 @@ export class HomeComponent implements OnInit {
         .subscribe(
             data => {
                 localStorage.setItem('token', data.token);
+                console.log("set token");
+                console.log(data.token);
                 localStorage.setItem('userId', data.userId);
                 this.router.navigate(['playlists']);
                 //go to playlists

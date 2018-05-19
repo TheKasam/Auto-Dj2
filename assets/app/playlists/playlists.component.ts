@@ -72,7 +72,7 @@ export class PlaylistsComponent implements OnInit {
 
   selectPlaylist(playlist){
     //set as current playlistfor user
-    this.mainService.updateCurrentPlaylist(playlist,name)
+    this.mainService.updateCurrentPlaylist(playlist,this.name)
       .subscribe(
         data => console.log(data),
         error => console.error(error)

@@ -47,8 +47,7 @@ router.use('/', function (req, res, next) {
                 error: err
             });
         }
-        console.log("token");
-        console.log(token);
+        
         next();
     })
 });
@@ -56,22 +55,26 @@ router.use('/', function (req, res, next) {
 
 
 router.post('/setCurrentPlaylist', function (req, res, next) {
-    var token = JSON.parse(req.query.updates[1]).value
-    var playlist = JSON.parse(req.query.updates[0]).value
-    var id = JSON.parse(req.query.updates[2]).value
+    console.log("req");
+    console.log(req.body.params);
+    var token = req.body.params.updates[1].value
+    var playlist = req.body.params.updates[0].value
+    var id = req.body.params.updates[2].value
 
     var decoded = jwt.decode(token);
-    User.findById(id, function (err, user) {
+
+    User.findOne({_id: id}, function(err, user) {
         if (err) {
             return res.status(500).json({
-                title: 'An error occurred',
+                title: 'An error occurred0',
                 error: err
             });
         }
         if (!user) {
-            return res.status(500).json({
-                title: 'No Message Found!',
-                error: {message: 'Message not found'}
+  
+            return res.status(401).json({
+                title: 'Login failed',
+                error: {message: 'user not found'}
             });
         }
         if (user._id != decoded.user._id) {
@@ -80,15 +83,17 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
                 error: {message: 'Users do not match'}
             });
         }
+        console.log("bef pla");
         var playlist = new Playlist({
-            name: playlist.name,
-            id: playlist.id,
+            name: JSON.parse(playlist).name,
+            id: JSON.parse(playlist).id,
             user: user
         });
+        console.log("after pla");
         playlist.save(function (err, result) {
             if (err) {
                 return res.status(500).json({
-                    title: 'An error occurred',
+                    title: 'An error occurred2',
                     error: err
                 });
             }
@@ -100,7 +105,11 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
             });
             
         });
+ 
+        console.log("found");
+        
     });
+
 });
 
 

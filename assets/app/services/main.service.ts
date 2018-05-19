@@ -50,9 +50,11 @@ export class MainService {
         const headers = new Headers({'Content-Type': 'application/json'});
         const playlistStringify = JSON.stringify(playlist);
         const token = localStorage.getItem('token')
-            ? '?token=' + localStorage.getItem('token')
+            ? '' + localStorage.getItem('token')
             : '';
-        let params = new HttpParams().set("playlist",playlistStringify).set("token",token);//.set("id",String(userID));
+            // ? '?token=' + localStorage.getItem('token')
+            // : '';
+        let params = new HttpParams().set("playlist",playlistStringify).set("token",token).set("id",String(userID));
         return this.http.post('http://localhost:3000/user/setCurrentPlaylist', {headers: headers, params: params})
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));
