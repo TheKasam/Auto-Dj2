@@ -11,5 +11,6 @@ export class VoteComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  
+  current_songs = ["molly","fear","psycho"]
 }
