@@ -44,11 +44,18 @@ export class MainService {
             .catch((error: Response) => Observable.throw(error.json()));
     }
 
-    addPlaylist(playlist: string){
-        // this.playlists.push(playlist);
-    }
-    addButtonOption(token: string){
-        this.access_token = token;
+
+    updateCurrentPlaylist(playlist: Playlist, userID: String) {
+        
+        const headers = new Headers({'Content-Type': 'application/json'});
+        const playlistStringify = JSON.stringify(playlist);
+        const token = localStorage.getItem('token')
+            ? '?token=' + localStorage.getItem('token')
+            : '';
+        let params = new HttpParams().set("playlist",playlistStringify).set("token",token);//.set("id",String(userID));
+        return this.http.post('http://localhost:3000/user/setCurrentPlaylist', {headers: headers, params: params})
+            .map((response: Response) => response.json())
+            .catch((error: Response) => Observable.throw(error.json()));
     }
     
 }

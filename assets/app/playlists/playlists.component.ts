@@ -72,9 +72,14 @@ export class PlaylistsComponent implements OnInit {
 
   selectPlaylist(playlist){
     //set as current playlistfor user
+    this.mainService.updateCurrentPlaylist(playlist,name)
+      .subscribe(
+        data => console.log(data),
+        error => console.error(error)
+      );    
     console.log(playlist.id);
     //navigate to vote page
-    //this.router.navigate(['vote']);
+    // this.router.navigate(['vote']);
   }
 
   // localStorage.setItem('name', name);
