@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var SpotifyWebApi = require('spotify-web-api-node');
 var User = require('../models/user');
+var Playlist = require('../models/playlist');
+
 
 router.get('/getplaylists', function(req, res, next) {
 
@@ -77,26 +79,8 @@ router.get('/getplaylistSongs', function(req, res, next) {
     var authId = JSON.parse(req.query.updates[0]).value
 
     var userId = JSON.parse(req.query.updates[1]).value
-    User.findOne({_id: userId}, function(err, user) {
-        if (err) {
-            return res.status(500).json({
-                title: 'An error occurred',
-                error: err
-            });
-        }
-        else if (!user) {
-    
-            return res.status(401).json({
-                title: 'Login failed',
-                error: {message: 'user not found'}
-            });
-        }
-        console.log("suer");
-        console.log(user);
 
-        var authId = JSON.parse(req.query.updates[0]).value
-
-    var userId = JSON.parse(req.query.updates[1]).value
+   
 
     var client_id = '356fadb6961741c1ba6aac9966edbcbf'; // Your client id
     var client_secret = 'f3b9982a3e3347bfa60263d1d50fbbc2'; // Your secret
@@ -120,14 +104,22 @@ router.get('/getplaylistSongs', function(req, res, next) {
             });
         }
         console.log(data.body);
+        console.log("plays id");
 
-        spotifyApi.getUserPlaylists(data.body.id, {
+
+        Playlist.findOne({user: userId}, function(err, playlist) {
+            console.log("playlist result");
+            console.log(playlist);            
+        
+
+
+        spotifyApi.getPlaylist(data.body.id, playlist.id, {
             limit: 30,
             offset: 0
         }, function(err, data) {
-
-
-
+            
+            console.log("inside");
+            console.log(data.body.tracks);
             if (err) {
                 return res.status(500).json({
                     title: 'An error occurred',
@@ -137,9 +129,11 @@ router.get('/getplaylistSongs', function(req, res, next) {
 
             var playlistsArray = [];
 
-            data.body["items"].forEach(function(item) {
-                var name = item.name;
-                var id = item.id;
+            data.body.tracks.items.forEach(function(item) {
+                console.log("track");
+                console.log(item.track.id);
+                var name = item.track.name;
+                var id = item.track.id;
                 playlistsArray.push({
                     id: id,
                     name: name
@@ -154,10 +148,11 @@ router.get('/getplaylistSongs', function(req, res, next) {
                 obj: playlistsArray
             });
 
+        });// end of spotify get
+    });//end of plyalist
         });
-    });
 
-      });
+      
 
 });
 
