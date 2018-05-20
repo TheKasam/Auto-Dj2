@@ -54,7 +54,8 @@ export class MainService {
                         )
                     );
                 }
-                return this.playlists;
+                
+                return this.songs;
             })
             .catch((error: Response) => Observable.throw(error.json()));
     }

@@ -76,6 +76,7 @@ export class VoteComponent implements OnInit {
     .subscribe(
         (songs: Song[]) => {
             this.songs = songs;
+            console.log(this.songs);
         }
     );
   }
