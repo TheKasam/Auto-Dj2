@@ -3,6 +3,8 @@ import { AuthService } from "../services/auth.service";
 import { MainService } from "../services/main.service";
 import {Router} from '@angular/router';
 
+import { Song } from "./song.model";
+
 
 @Component({
   selector: 'app-vote',
@@ -14,14 +16,38 @@ export class VoteComponent implements OnInit {
   constructor(private router: Router, private mainService: MainService) { }
 
   ngOnInit() {
-   // this.name = localStorage.getItem('userId');
     this.setCode(this.code);
+    this.getToken();
   }
+
+
+  getToken() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        console.log(this.name)
+        this.mainService.getAccessToken(this.name)
+          .subscribe(
+              data => {
+                  console.log("access token");
+                  console.log(data.access_token);
+                  this.accessToken = data.access_token;
+                  this.getSongs(this.accessToken, this.name);
+                  //go to playlists
+              },
+              error => console.error(error)
+           );
+        resolve();
+      }, 1);
+    });
+  }
+
+  accessToken = "";
+
   name = localStorage.getItem('userId');
   current_songs = ["molly","fear","psycho"];
   code = this.randomCodeGenerator();
   randNum = Math.floor((Math.random() * 3) + 0);
-
+  songs: Song[];
   randomCodeGenerator(){
     length = 5
     var text = '';
@@ -45,4 +71,12 @@ export class VoteComponent implements OnInit {
       // this.router.navigate(['vote']);
   }
 
+  getSongs(accessToken,userId){
+    this.mainService.getPlaylistSongs(accessToken,userId)
+    .subscribe(
+        (songs: Song[]) => {
+            this.songs = songs;
+        }
+    );
+  }
 }

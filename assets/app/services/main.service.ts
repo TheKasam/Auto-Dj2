@@ -6,6 +6,7 @@ import 'rxjs/Rx';
 import { Observable } from "rxjs";
 
 import { Playlist } from "../playlists/playlist.model";
+import { Song } from "../vote/song.model";
 
 @Injectable()
 export class MainService {
@@ -13,7 +14,9 @@ export class MainService {
 
 
     playlists: Playlist[] = [];
+    songs: Song[] = [];
     access_token: string = "";
+    
 
 
     getPlaylists(authId,userId){
@@ -35,6 +38,28 @@ export class MainService {
             })
             .catch((error: Response) => Observable.throw(error.json()));
     }
+
+    getPlaylistSongs(authId,userId){
+        let params = new HttpParams().set("authId",authId).set("userID",userId);
+        const headers = new Headers({'Content-Type': 'application/json'});
+
+        return this.http.get('http://localhost:3000/spotify/getplaylistSongs', {headers: headers, params: params})
+            .map((response: Response) => {
+                const songsFetch = response.json().obj;
+                let songsToGet: Song[] = [];
+                for (let song of songsFetch) {
+                    this.songs.push(new Song(
+                        song.id,
+                        song.name
+                        )
+                    );
+                }
+                return this.playlists;
+            })
+            .catch((error: Response) => Observable.throw(error.json()));
+    }
+
+
     getAccessToken(userID: string){
         console.log("Get acces token");
         let params = new HttpParams().set("id",userID) //Create new HttpParams
