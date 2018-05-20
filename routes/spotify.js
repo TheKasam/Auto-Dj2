@@ -97,14 +97,16 @@ router.get('/getplaylistSongs', function(req, res, next) {
         }, function(err, playlist) {
             console.log("playlist result");
             console.log(playlist);
+            console.log("iser id");
+            console.log(data.body.id);
 
             spotifyApi.getPlaylist(data.body.id, playlist.id, {
-                limit: 30,
+                limit: 10,
                 offset: 0
             }, function(err, data) {
 
                 console.log("inside");
-                console.log(data.body.tracks);
+                console.log(err);
                 if (err) {
                     return res.status(500).json({
                         title: 'An error occurred',

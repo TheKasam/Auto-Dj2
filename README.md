@@ -14,3 +14,4 @@ npm run build #start angular
 //get all user playlists
 //refresh code
 //replace code when making new one
+//error when accessing a public playlist (curated by spotify)
