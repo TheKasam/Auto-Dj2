@@ -21,9 +21,6 @@ router.get('/getplaylists', function(req, res, next) {
         redirectUri: redirect_uri
     });
 
-
-
-
     spotifyApi.setAccessToken(authId);
     spotifyApi.getMe(function(err, data) {
         if (err) {
@@ -38,8 +35,6 @@ router.get('/getplaylists', function(req, res, next) {
             limit: 30,
             offset: 0
         }, function(err, data) {
-
-
 
             if (err) {
                 return res.status(500).json({
@@ -66,21 +61,15 @@ router.get('/getplaylists', function(req, res, next) {
                 message: 'Success',
                 obj: playlistsArray
             });
-
         });
     });
-
-
 });
 
 router.get('/getplaylistSongs', function(req, res, next) {
 
-
     var authId = JSON.parse(req.query.updates[0]).value
 
     var userId = JSON.parse(req.query.updates[1]).value
-
-   
 
     var client_id = '356fadb6961741c1ba6aac9966edbcbf'; // Your client id
     var client_secret = 'f3b9982a3e3347bfa60263d1d50fbbc2'; // Your secret
@@ -91,9 +80,6 @@ router.get('/getplaylistSongs', function(req, res, next) {
         clientSecret: client_secret,
         redirectUri: redirect_uri
     });
-
-
-
 
     spotifyApi.setAccessToken(authId);
     spotifyApi.getMe(function(err, data) {
@@ -106,54 +92,49 @@ router.get('/getplaylistSongs', function(req, res, next) {
         console.log(data.body);
         console.log("plays id");
 
-
-        Playlist.findOne({user: userId}, function(err, playlist) {
+        Playlist.findOne({
+            user: userId
+        }, function(err, playlist) {
             console.log("playlist result");
-            console.log(playlist);            
-        
+            console.log(playlist);
 
+            spotifyApi.getPlaylist(data.body.id, playlist.id, {
+                limit: 30,
+                offset: 0
+            }, function(err, data) {
 
-        spotifyApi.getPlaylist(data.body.id, playlist.id, {
-            limit: 30,
-            offset: 0
-        }, function(err, data) {
-            
-            console.log("inside");
-            console.log(data.body.tracks);
-            if (err) {
-                return res.status(500).json({
-                    title: 'An error occurred',
-                    error: err
+                console.log("inside");
+                console.log(data.body.tracks);
+                if (err) {
+                    return res.status(500).json({
+                        title: 'An error occurred',
+                        error: err
+                    });
+                }
+
+                var playlistsArray = [];
+
+                data.body.tracks.items.forEach(function(item) {
+                    console.log("track");
+                    console.log(item.track.id);
+                    var name = item.track.name;
+                    var id = item.track.id;
+                    playlistsArray.push({
+                        id: id,
+                        name: name
+                    });
                 });
-            }
+                console.log("playlistsArray");
 
-            var playlistsArray = [];
+                console.log(playlistsArray);
 
-            data.body.tracks.items.forEach(function(item) {
-                console.log("track");
-                console.log(item.track.id);
-                var name = item.track.name;
-                var id = item.track.id;
-                playlistsArray.push({
-                    id: id,
-                    name: name
+                res.status(200).json({
+                    message: 'Success',
+                    obj: playlistsArray
                 });
-            });
-            console.log("playlistsArray");
-
-            console.log(playlistsArray);
-
-            res.status(200).json({
-                message: 'Success',
-                obj: playlistsArray
-            });
-
-        });// end of spotify get
-    });//end of plyalist
-        });
-
-      
-
+            }); // end of spotify get
+        }); //end of plyalist
+    });
 });
 
 module.exports = router;
