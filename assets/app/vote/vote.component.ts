@@ -20,7 +20,14 @@ export class VoteComponent implements OnInit {
     this.getToken();
   }
 
-
+  accessToken = "";
+  name = localStorage.getItem('userId');
+  code = this.randomCodeGenerator();
+  randNum = Math.floor((Math.random() * 3) + 0);
+  songs: Song[];
+  //used to select random songs
+  songsNumArr = [];
+  current_songs: Song[] =[];
   getToken() {
     return new Promise(resolve => {
       setTimeout(() => {
@@ -41,13 +48,6 @@ export class VoteComponent implements OnInit {
     });
   }
 
-  accessToken = "";
-
-  name = localStorage.getItem('userId');
-  current_songs = ["molly","fear","psycho"];
-  code = this.randomCodeGenerator();
-  randNum = Math.floor((Math.random() * 3) + 0);
-  songs: Song[];
   randomCodeGenerator(){
     length = 5
     var text = '';
@@ -77,7 +77,33 @@ export class VoteComponent implements OnInit {
         (songs: Song[]) => {
             this.songs = songs;
             console.log(this.songs);
+            this.selectSongs();
         }
     );
   }
+
+  selectSongs(){
+    for (var i = 0; i < this.songs.length; i++){
+      this.songsNumArr.push(i);
+
+      
+    }
+    for (var i = 0; i < 3; i++){
+      
+      console.log(this.songsNumArr);
+      var randNum = Math.floor((Math.random() * this.songsNumArr.length) + 0);
+      console.log(randNum);
+      console.log(this.songs[randNum]);
+      this.current_songs.push(this.songs[this.songsNumArr[randNum]]);
+      this.songsNumArr.splice(randNum,1);   
+      // for ( var i = 0; i < this.songsNumArr.length; i++){
+      //   if ( i = this.songsNumArr[randNum]){
+             
+      //   }
+      // }
+
+    }
+  }
+
+
 }
