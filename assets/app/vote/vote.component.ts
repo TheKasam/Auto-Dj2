@@ -4,6 +4,7 @@ import { MainService } from "../services/main.service";
 import {Router} from '@angular/router';
 
 import { Song } from "./song.model";
+import { exists } from 'fs';
 
 
 @Component({
@@ -82,6 +83,11 @@ export class VoteComponent implements OnInit {
     );
   }
 
+
+
+  //check if value existsif so update else create
+
+  //selects 3 random songs and store in current_songs
   selectSongs(){
     for (var i = 0; i < this.songs.length; i++){
       this.songsNumArr.push(i);
@@ -96,12 +102,7 @@ export class VoteComponent implements OnInit {
       console.log(this.songs[randNum]);
       this.current_songs.push(this.songs[this.songsNumArr[randNum]]);
       this.songsNumArr.splice(randNum,1);   
-      // for ( var i = 0; i < this.songsNumArr.length; i++){
-      //   if ( i = this.songsNumArr[randNum]){
-             
-      //   }
-      // }
-
+    
     }
   }
 

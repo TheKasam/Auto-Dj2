@@ -7,7 +7,7 @@ var schema = new Schema({
     name: {type: String, required: true},
     id:{type: String, required: true},
     votes:{type: Integer, required: true},
-    user: {type: Schema.Types.ObjectId, ref: 'User'}
+    code: {type: Schema.Types.ObjectId, ref: 'Code'}
 });
 
 

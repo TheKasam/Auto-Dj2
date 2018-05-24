@@ -8,6 +8,7 @@ var request = require('request');
 var User = require('../models/user');
 var ShareableCode = require('../models/code');
 var Playlist = require('../models/playlist');
+var Song = require('../models/song');
 
 router.get('/getAccessToken', function(req, res) {
     //check if user exists
@@ -199,6 +200,80 @@ router.post('/setShareableCode', function (req, res, next) {
     });
 
 });
+
+router.post('/pushToCurrentSongs', function (req, res, next) {
+    console.log("req");
+    console.log(req.body.params);
+    var song = req.body.params.updates[0].value
+    var token = req.body.params.updates[1].value
+    var id = req.body.params.updates[2].value
+
+    var decoded = jwt.decode(token);
+
+    Code.findOne({_id: id}, function(err, user) {
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred0',
+                error: err
+            });
+        }
+        else if (!user) {
+  
+            return res.status(401).json({
+                title: 'Login failed',
+                error: {message: 'user not found'}
+            });
+        }
+        else if (user._id != decoded.user._id) {
+            return res.status(401).json({
+                title: 'Not Authenticated',
+                error: {message: 'Users do not match'}
+            });
+        } else {
+            console.log("bef pla");
+            console.log(JSON.parse(code));
+            console.log(user);
+            var codeToSave = new ShareableCode({
+                code: JSON.parse(code),
+                user: user
+            });
+            console.log("after");
+            codeToSave.save(function(err, result) {
+                if (err) {
+                  return res.status(500).json({
+                    title: 'An error occurred',
+                    error: err
+                  });  
+                }
+                else {
+                    user.shareable_code = result;
+                    user.save(function (err, result) {
+                        if (err) {
+                            return res.status(500).json({
+                                title: 'An error occurred',
+                                error: err
+                            });
+                        } else {
+                            console.log("saved code to use");
+                        }
+                    });
+                  console.log("saved code");
+                }
+              });
+            
+            console.log(user);
+            res.status(201).json({
+                message: 'Saved code',
+                obj: user
+            });
+        }
+
+        console.log("found");
+        
+    });
+
+});
+
 
 
   module.exports = router;
