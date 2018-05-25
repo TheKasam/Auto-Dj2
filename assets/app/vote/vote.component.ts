@@ -68,8 +68,7 @@ export class VoteComponent implements OnInit {
         error => console.error(error)
       );    
       console.log(code);
-      //navigate to vote page
-      // this.router.navigate(['vote']);
+  
   }
 
   getSongs(accessToken,userId){
@@ -82,8 +81,6 @@ export class VoteComponent implements OnInit {
         }
     );
   }
-
-
 
   //check if value existsif so update else create
 
@@ -104,7 +101,15 @@ export class VoteComponent implements OnInit {
       this.songsNumArr.splice(randNum,1);   
     
     }
+    this.pushSong();
   }
 
+  pushSong(){
+    this.mainService.pushToCurrentSongs(this.songs[0],this.name)
+    .subscribe(
+      data => console.log(data),
+      error => console.error(error)
+    );    
+  }
 
 }

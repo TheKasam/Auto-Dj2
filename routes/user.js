@@ -10,6 +10,7 @@ var ShareableCode = require('../models/code');
 var Playlist = require('../models/playlist');
 var Song = require('../models/song');
 
+
 router.get('/getAccessToken', function(req, res) {
     //check if user exists
 
@@ -138,34 +139,48 @@ router.post('/setShareableCode', function (req, res, next) {
 
 });
 
-router.post('/pushToCurrentSongs', function (req, res, next) {
+router.post('/pushToCurrentSongs', function (req, res) {
 
-    var song = req.body.params.updates[0].value
+    var song = JSON.parse(req.body.params.updates[0].value)
     var token = req.body.params.updates[1].value
     var id = req.body.params.updates[2].value
+    console.log("req");
 
+    console.log( song.name);
     var decoded = jwt.decode(token);
 
-    Code.findOne({user: id}, function(err, code) {
+    ShareableCode.findOne({user: id}, function(err, code) {
+        console.log("code" ,code);
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred0',
                 error: err
             });
         }
-        var song = new Song({
+        var songToSave = new Song({
             name: song.name,
             id: song.id,
             votes: 0,
-            code: code
-        });
-        code.songs_vote.push(song);
-        code.save();
-        res.status(201).json({
-            message: 'Saved code',
-            obj: result
+            code: code._id
         });
 
+        songToSave.save(function (err, result) {
+            console.log("logging song", result);
+
+            if (err) {
+                return res.status(500).json({
+                    title: 'An error occurred',
+                    error: err
+                });
+            }
+            code.songs_vote.push(result);
+            code.save();
+            res.status(201).json({
+                message: 'Saved code',
+                obj: result
+            });
+    
+        });
     });
 });
 
@@ -179,7 +194,6 @@ router.post('/clearCurrentSongs', function (req, res, next) {
     Code.update({user: id}, { $set: { songs_vote: [] }}, function(err, affected){
         console.log('affected: ', affected);
     });
-
 });
 
   module.exports = router;
