@@ -150,7 +150,6 @@ router.post('/setShareableCode', function (req, res, next) {
                 code: JSON.parse(code),
                 user: id
             });
-
             codeToSave.save(function(err, result) {
                 if (err) {
                   return res.status(500).json({
@@ -158,14 +157,12 @@ router.post('/setShareableCode', function (req, res, next) {
                     error: err
                   });  
                 }
-            
                 res.status(201).json({
                     message: 'Saved code',
                     obj: result
                 });
             });
         }
-
         else {
             console.log("first");
             console.log(JSON.parse(code));
@@ -184,14 +181,9 @@ router.post('/setShareableCode', function (req, res, next) {
                     message: 'updated code',
                     obj: result
                 });
-            });
-            
+            });   
         }
-
-       
-        
     });
-
 });
 
 router.post('/pushToCurrentSongs', function (req, res, next) {
