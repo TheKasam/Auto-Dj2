@@ -62,19 +62,14 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
 
     var decoded = jwt.decode(token);
 
-    // var playlistToSave = new Playlist({
-    //     name: JSON.parse(playlist).name,
-    //     id: JSON.parse(playlist).id,
-    //     user: user
-    // });
-    Playlist.findOneAndUpdate({user: id}, { name: JSON.parse(playlist).name, id:JSON.parse(playlist).id  }, {new: true, upsert:true}, function(err, result){
+    Playlist.findOneAndUpdate({user: id}, { name: JSON.parse(playlist).name, id:JSON.parse(playlist).id  }, { upsert:true, new: true}, function(err, result){
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred0',
                 error: err
             });
         }
-        
+        console.log("loggin result", result);
         User.findOne({_id: id}, function(err, user) {
             if (err) {
                 return res.status(500).json({
@@ -82,7 +77,9 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
                     error: err
                 });
             }
+            console.log("loggin result2", result);
             user.current_playlist = result;
+            console.log("loggin result3", result);
             user.save(function (err, user) {
                 if (err) {
                     return res.status(500).json({
@@ -109,7 +106,7 @@ router.post('/setShareableCode', function (req, res, next) {
 
     var decoded = jwt.decode(token);
 
-    ShareableCode.findOneAndUpdate({user: id}, { code: JSON.parse(codeToUpdate) }, {upsert:true}, function(err, result){
+    ShareableCode.findOneAndUpdate({user: id}, { code: JSON.parse(codeToUpdate) }, {upsert:true, new: true}, function(err, result){
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred0',
@@ -123,7 +120,7 @@ router.post('/setShareableCode', function (req, res, next) {
                     error: err
                 });
             }
-            user.current_playlist = result;
+            user.shareable_code = result;
             user.save(function (err, user) {
                 if (err) {
                     return res.status(500).json({
