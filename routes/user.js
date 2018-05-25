@@ -194,7 +194,7 @@ router.post('/pushToCurrentSongs', function (req, res, next) {
 
     var decoded = jwt.decode(token);
 
-    Code.findOne({_id: id}, function(err, code) {
+    Code.findOne({user: id}, function(err, code) {
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred0',
@@ -217,6 +217,17 @@ router.post('/pushToCurrentSongs', function (req, res, next) {
     });
 });
 
+router.post('/clearCurrentSongs', function (req, res, next) {
 
+    var token = req.body.params.updates[0].value
+    var id = req.body.params.updates[0].value
+
+    var decoded = jwt.decode(token);
+
+    Code.update({user: id}, { $set: { songs_vote: [] }}, function(err, affected){
+        console.log('affected: ', affected);
+    });
+
+});
 
   module.exports = router;
