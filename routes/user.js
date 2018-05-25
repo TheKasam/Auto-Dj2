@@ -144,12 +144,6 @@ router.post('/setShareableCode', function (req, res, next) {
                 error: err
             });
         }
-        else if (id != decoded.user._id) {
-            return res.status(401).json({
-                title: 'Not Authenticated',
-                error: {message: 'Users do not match'}
-            });
-        }
         else if (!codeResult) {
             //create code
             var codeToSave = new ShareableCode({
@@ -164,70 +158,37 @@ router.post('/setShareableCode', function (req, res, next) {
                     error: err
                   });  
                 }
-                //no error
-                User.findOne({_id: id}, function(err, user) {
-
-                    if (err) {
-                        return res.status(500).json({
-                            title: 'An error occurred0',
-                            error: err
-                        });
-                    }
-                    else if (!user) {
-                        return res.status(500).json({
-                            title: 'An error occurred0',
-                            error: "user desnt exist"
-                        });
-                    }
-                    // user exists
-                    user.shareable_code = result;
-                    user.save(function (err, userResult) {
-                        if (err) {
-                            return res.status(500).json({
-                                title: 'An error occurred',
-                                error: err
-                            });
-                        } 
-                        res.status(201).json({
-                            message: 'Saved code',
-                            obj: result
-                        });
-                        console.log("saved code to use");
-                        
-                    });
-                    console.log("saved code");
+            
+                res.status(201).json({
+                    message: 'Saved code',
+                    obj: result
                 });
             });
         }
 
         else {
-             //code exists for user
-            // console.log("bef pla");
-            // console.log(JSON.parse(code));
-            // console.log(user);
-
-            // console.log("after");
-            
-            
-            // console.log(user);
-
+            console.log("first");
+            console.log(JSON.parse(code));
             codeResult.code = JSON.parse(code);
-            codeToSave.save(function(err, result) {
+            console.log("second");
+            codeResult.save(function(err, result) {
+                console.log("third");
                 if (err) {
                   return res.status(500).json({
                     title: 'An error occurred',
                     error: err
                   });  
                 }
+                console.log("found");
                 res.status(201).json({
-                    message: 'Saved code',
+                    message: 'updated code',
                     obj: result
                 });
             });
             
         }
 
-        console.log("found");
+       
         
     });
 
