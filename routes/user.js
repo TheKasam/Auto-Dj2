@@ -131,59 +131,25 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
 router.post('/setShareableCode', function (req, res, next) {
     console.log("req");
     console.log(req.body.params);
-    var code = req.body.params.updates[0].value
+    var codeToUpdate = req.body.params.updates[0].value
     var token = req.body.params.updates[1].value
     var id = req.body.params.updates[2].value
 
     var decoded = jwt.decode(token);
 
-    ShareableCode.findOne({user: id}, function(err, codeResult) {
+    ShareableCode.findOneAndUpdate({user: id}, { code: JSON.parse(codeToUpdate) }, {upsert:true}, function(err, result){
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred0',
                 error: err
             });
         }
-        else if (!codeResult) {
-            //create code
-            var codeToSave = new ShareableCode({
-                code: JSON.parse(code),
-                user: id
-            });
-            codeToSave.save(function(err, result) {
-                if (err) {
-                  return res.status(500).json({
-                    title: 'An error occurred',
-                    error: err
-                  });  
-                }
-                res.status(201).json({
-                    message: 'Saved code',
-                    obj: result
-                });
-            });
-        }
-        else {
-            console.log("first");
-            console.log(JSON.parse(code));
-            codeResult.code = JSON.parse(code);
-            console.log("second");
-            codeResult.save(function(err, result) {
-                console.log("third");
-                if (err) {
-                  return res.status(500).json({
-                    title: 'An error occurred',
-                    error: err
-                  });  
-                }
-                console.log("found");
-                res.status(201).json({
-                    message: 'updated code',
-                    obj: result
-                });
-            });   
-        }
+        res.status(201).json({
+            message: 'Saved code',
+            obj: result
+        });
     });
+
 });
 
 router.post('/pushToCurrentSongs', function (req, res, next) {
