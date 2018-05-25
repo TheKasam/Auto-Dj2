@@ -137,10 +137,6 @@ router.post('/setShareableCode', function (req, res, next) {
                 }); 
             });
         });
-        res.status(201).json({
-            message: 'Saved code',
-            obj: result
-        });
     });
 
 });
