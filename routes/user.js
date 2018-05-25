@@ -137,34 +137,26 @@ router.post('/setShareableCode', function (req, res, next) {
 
     var decoded = jwt.decode(token);
 
-    User.findOne({_id: id}, function(err, user) {
+    ShareableCode.findOne({user: id}, function(err, codeResult) {
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred0',
                 error: err
             });
         }
-        else if (!user) {
-  
-            return res.status(401).json({
-                title: 'Login failed',
-                error: {message: 'user not found'}
-            });
-        }
-        else if (user._id != decoded.user._id) {
+        else if (id != decoded.user._id) {
             return res.status(401).json({
                 title: 'Not Authenticated',
                 error: {message: 'Users do not match'}
             });
-        } else {
-            console.log("bef pla");
-            console.log(JSON.parse(code));
-            console.log(user);
+        }
+        else if (!codeResult) {
+            //create code
             var codeToSave = new ShareableCode({
                 code: JSON.parse(code),
-                user: user
+                user: id
             });
-            console.log("after");
+
             codeToSave.save(function(err, result) {
                 if (err) {
                   return res.status(500).json({
@@ -172,27 +164,67 @@ router.post('/setShareableCode', function (req, res, next) {
                     error: err
                   });  
                 }
-                else {
+                //no error
+                User.findOne({_id: id}, function(err, user) {
+
+                    if (err) {
+                        return res.status(500).json({
+                            title: 'An error occurred0',
+                            error: err
+                        });
+                    }
+                    else if (!user) {
+                        return res.status(500).json({
+                            title: 'An error occurred0',
+                            error: "user desnt exist"
+                        });
+                    }
+                    // user exists
                     user.shareable_code = result;
-                    user.save(function (err, result) {
+                    user.save(function (err, userResult) {
                         if (err) {
                             return res.status(500).json({
                                 title: 'An error occurred',
                                 error: err
                             });
-                        } else {
-                            console.log("saved code to use");
-                        }
+                        } 
+                        res.status(201).json({
+                            message: 'Saved code',
+                            obj: result
+                        });
+                        console.log("saved code to use");
+                        
                     });
-                  console.log("saved code");
-                }
-              });
-            
-            console.log(user);
-            res.status(201).json({
-                message: 'Saved code',
-                obj: user
+                    console.log("saved code");
+                });
             });
+        }
+
+        else {
+             //code exists for user
+            // console.log("bef pla");
+            // console.log(JSON.parse(code));
+            // console.log(user);
+
+            // console.log("after");
+            
+            
+            // console.log(user);
+
+            codeResult.code = JSON.parse(code);
+            codeToSave.save(function(err, result) {
+                if (err) {
+                  return res.status(500).json({
+                    title: 'An error occurred',
+                    error: err
+                  });  
+                }
+                res.status(201).json({
+                    message: 'Saved code',
+                    obj: result
+                });
+            });
+            
         }
 
         console.log("found");
