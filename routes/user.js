@@ -212,8 +212,8 @@ router.get('/getSongVote', function(req, res) {
       }
       
       res.status(200).json({
-          message: 'Successfully logged in',
-          access_token: code.songs_vote
+          message: 'Successfully retrieved votes',
+          obj: code.songs_vote
         });
     });
 });

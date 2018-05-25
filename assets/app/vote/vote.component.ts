@@ -112,4 +112,12 @@ export class VoteComponent implements OnInit {
     );    
   }
 
+  getVotes(){
+    this.mainService.getVotes(this.name)
+    .subscribe(
+      data => console.log(data),
+      error => console.log(error)
+    );
+  }
+
 }
