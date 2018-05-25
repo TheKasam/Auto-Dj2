@@ -62,70 +62,42 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
 
     var decoded = jwt.decode(token);
 
-    User.findOne({_id: id}, function(err, user) {
+    // var playlistToSave = new Playlist({
+    //     name: JSON.parse(playlist).name,
+    //     id: JSON.parse(playlist).id,
+    //     user: user
+    // });
+    Playlist.findOneAndUpdate({user: id}, { name: JSON.parse(playlist).name, id:JSON.parse(playlist).id  }, {new: true, upsert:true}, function(err, result){
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred0',
                 error: err
             });
         }
-        else if (!user) {
-  
-            return res.status(401).json({
-                title: 'Login failed',
-                error: {message: 'user not found'}
-            });
-        }
-        else if (user._id != decoded.user._id) {
-            return res.status(401).json({
-                title: 'Not Authenticated',
-                error: {message: 'Users do not match'}
-            });
-        } else {
-            console.log("bef pla");
-            var playlistToSave = new Playlist({
-                name: JSON.parse(playlist).name,
-                id: JSON.parse(playlist).id,
-                user: user
-            });
-            console.log(JSON.parse(playlist).name);
-            playlistToSave.save(function(err, result) {
-                if (err) {
-                  console.log("could not save");
-                  return res.status(500).json({
-                    title: 'An error occurred',
+        
+        User.findOne({_id: id}, function(err, user) {
+            if (err) {
+                return res.status(500).json({
+                    title: 'An error occurred0',
                     error: err
-                  });  
-                }
-                else {
-                    console.log("TO SAVE USER");
-                    user.current_playlist = result;
-                    user.save(function (err, result) {
-                        if (err) {
-                            console.log("user not saved");
-                            return res.status(500).json({
-                                title: 'An error occurred',
-                                error: err
-                            });
-                        } else {
-                            console.log("saved user");
-                        }
+                });
+            }
+            user.current_playlist = result;
+            user.save(function (err, user) {
+                if (err) {
+                    return res.status(500).json({
+                        title: 'couldnt save occurred',
+                        error: err
                     });
-                  console.log("saved playlists maybe");
                 }
-              });
-              
-            console.log(user);
-            res.status(201).json({
-                message: 'Saved playlist',
-                obj: user
+                res.status(201).json({
+                    message: 'Saved code',
+                    obj: result
+                }); 
             });
-        }
-
-        console.log("found");
+        });
         
     });
-
 });
 
 router.post('/setShareableCode', function (req, res, next) {
@@ -144,6 +116,27 @@ router.post('/setShareableCode', function (req, res, next) {
                 error: err
             });
         }
+        User.findOne({_id: id}, function(err, user) {
+            if (err) {
+                return res.status(500).json({
+                    title: 'An error occurred0',
+                    error: err
+                });
+            }
+            user.current_playlist = result;
+            user.save(function (err, user) {
+                if (err) {
+                    return res.status(500).json({
+                        title: 'couldnt save occurred',
+                        error: err
+                    });
+                }
+                res.status(201).json({
+                    message: 'Saved code',
+                    obj: result
+                }); 
+            });
+        });
         res.status(201).json({
             message: 'Saved code',
             obj: result
