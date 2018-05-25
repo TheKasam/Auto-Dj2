@@ -37,7 +37,7 @@ router.get('/getAccessToken', function(req, res) {
           access_token: user.access_token
         });
     });
-  });
+});
 
 router.use('/', function (req, res, next) {
     console.log("Start");
@@ -196,4 +196,25 @@ router.post('/clearCurrentSongs', function (req, res, next) {
     });
 });
 
-  module.exports = router;
+
+router.get('/getSongVote', function(req, res) {
+    //check if user exists
+
+    var id = JSON.parse(req.query.updates).value
+    console.log(id);
+
+    ShareableCode.findOne({user: id}, function(err, code) {
+      if (err) {
+          return res.status(500).json({
+              title: 'An error occurred',
+              error: err
+          });
+      }
+      
+      res.status(200).json({
+          message: 'Successfully logged in',
+          access_token: code.songs_vote
+        });
+    });
+});
+module.exports = router;
