@@ -110,6 +110,7 @@ export class VoteComponent implements OnInit {
       data => console.log(data),
       error => console.error(error)
     );    
+    this.getVotes();
   }
 
   getVotes(){

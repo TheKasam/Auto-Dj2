@@ -119,7 +119,10 @@ export class MainService {
     
     getVotes(userID: string){
         console.log("Get votes");
-        let params = new HttpParams().set("id",userID) //Create new HttpParams
+        const token = localStorage.getItem('token')
+            ? '' + localStorage.getItem('token')
+            : '';
+        let params = new HttpParams().set("id",userID).set("token",token); //Create new HttpParams
         const headers = new Headers({'Content-Type': 'application/json'});
         return this.http.get('http://localhost:3000/user/getVotes', {headers: headers, params: params})
             .map((response: Response) => response.json())
