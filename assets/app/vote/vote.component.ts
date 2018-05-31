@@ -82,7 +82,7 @@ export class VoteComponent implements OnInit {
     );
   }
 
-  //check if value existsif so update else create
+  //check if value exists if so update else create
 
   //selects 3 random songs and store in current_songs
   selectSongs(){
@@ -109,16 +109,23 @@ export class VoteComponent implements OnInit {
     .subscribe(
       data => console.log(data),
       error => console.error(error)
-    );    
+    );   
     this.getVotes();
   }
 
   getVotes(){
+    var returned;
     this.mainService.getVotes(this.name)
     .subscribe(
-      data => console.log(data),
+      data => {
+        returned = data;
+        console.log(data);
+      },
       error => console.log(error)
     );
+    if(returned.obj.length == 0){
+      this.selectSongs();
+    }
   }
 
 }
