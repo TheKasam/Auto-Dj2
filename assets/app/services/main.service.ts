@@ -161,7 +161,7 @@ export class MainService {
             : '';
         
         let params = new HttpParams().set("songID",songID).set("token",token);
-        return this.http.post('http://localhost:3000/user/subtracteVote', {headers: headers, params: params})
+        return this.http.post('http://localhost:3000/user/subtractVote', {headers: headers, params: params})
             .map((response: Response) => {
                 return response.json().message})
             .catch((error: Response) => Observable.throw(error.json()));

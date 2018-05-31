@@ -170,6 +170,15 @@ export class VoteComponent implements OnInit {
   
   buttons = ["white","white","white"]
   setCurrentButton(index){
+
+    for (var i=0; i<3; i++) {
+      if (this.buttons[i]=="green"){
+        console.log(i);
+        this.subtractVote(this.current_songs[i].id)
+      }
+    }
+    
+
     if (index == 0){
       this.buttons[0] = "green"
       this.buttons[1] = "white"
@@ -192,18 +201,18 @@ export class VoteComponent implements OnInit {
     .subscribe(
       data => {
         console.log(data);
-        this.getCurrentSongs();
+        
         this.setCurrentButton(index);
       },
       error => console.log(error)
     );
   }
-  subtractVote(songID,index){
+  subtractVote(songID){
     this.mainService.subtractSongVote(songID)
     .subscribe(
       data => {
         console.log(data);
-      
+        this.getCurrentSongs();
       },
       error => console.log(error)
     );

@@ -264,7 +264,7 @@ router.post('/updateVote', function (req, res, next){
     });
 });
 
-router.post('/subtracteVote', function (req, res, next){
+router.post('/subtractVote', function (req, res, next){
     console.log("songId");
     console.log(req.body.params.updates[0].value);
     var songId = req.body.params.updates[0].value;
