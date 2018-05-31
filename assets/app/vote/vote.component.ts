@@ -118,6 +118,7 @@ export class VoteComponent implements OnInit {
             this.songs = songs;
             console.log(this.songs);
             this.selectSongs();
+            this.playFirstSong();
         }
     );
   }
@@ -166,7 +167,6 @@ export class VoteComponent implements OnInit {
     );   
     
   }
-
   
   buttons = ["white","white","white"]
   setCurrentButton(index){
@@ -223,4 +223,7 @@ export class VoteComponent implements OnInit {
     );
   }
 
+  playFirstSong(){
+
+  }
 }

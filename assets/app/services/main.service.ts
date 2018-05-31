@@ -80,7 +80,7 @@ export class MainService {
         let params = new HttpParams().set("playlist",playlistStringify).set("token",token).set("id",String(userID));
         return this.http.post('http://localhost:3000/user/setCurrentPlaylist', {headers: headers, params: params})
             .map((response: Response) => {
-                return response.json().message})
+                return response.json().decision})
             .catch((error: Response) => Observable.throw(error.json()));
     }
 
