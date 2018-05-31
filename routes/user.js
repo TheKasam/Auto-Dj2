@@ -112,7 +112,7 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
             }
             console.log("loggin result2", result);
             var newPlaylist = false;
-            if(user.current_playlist.id){
+            /*if(user.current_playlist.id){
                 if(result.id != user.current_playlist.id){
                     user.current_playlist = result;
                     newPlaylist = true;
@@ -123,7 +123,8 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
             }
             else{
                 user.current_playlist = result;
-            }
+            }*/
+            user.current_playlist = result;
             console.log("loggin result3", result);
             user.save(function (err, user) {
                 if (err) {
@@ -135,7 +136,7 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
                 res.status(201).json({
                     message: 'Saved code',
                     playlist_id: result.id,
-                    decision: newPlaylist
+                    //decision: newPlaylist
                 }); 
             });
         });

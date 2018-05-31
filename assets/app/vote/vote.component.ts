@@ -62,8 +62,6 @@ export class VoteComponent implements OnInit {
   getVotes(){
     return new Promise(resolve => {
       setTimeout(() => {
-
-
         this.mainService.getVotes(this.name)
         .subscribe(
           data => {
@@ -123,7 +121,6 @@ export class VoteComponent implements OnInit {
             this.songs = songs;
             console.log(this.songs);
             this.selectSongs();
-            this.playFirstSong();
         }
     );
   }
