@@ -127,7 +127,7 @@ export class MainService {
                 let songsToReturn: Song[] = [];
                 for (let song of songsFetch) {
                     songsToReturn.push(new Song(
-                        song.id,
+                        song._id,
                         song.name,
                         song.votes
                         )
