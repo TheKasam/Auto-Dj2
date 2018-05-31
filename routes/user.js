@@ -237,7 +237,7 @@ router.post('/updateVote', function (req, res, next){
 
     var decoded = jwt.decode(token);
 
-    Song.findOne({id: songId}, function(err, songToSave) {
+    Song.findOne({_id: songId}, function(err, songToSave) {
         console.log("song to save" ,songToSave);
         if (err) {
             return res.status(500).json({
