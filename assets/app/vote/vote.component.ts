@@ -23,7 +23,7 @@ export class VoteComponent implements OnInit {
 
   accessToken = "";
   name = localStorage.getItem('userId');
-  tempData;
+  songsFromDB: Song[];
   code = this.randomCodeGenerator();
   randNum = Math.floor((Math.random() * 3) + 0);
   songs: Song[];
@@ -41,8 +41,7 @@ export class VoteComponent implements OnInit {
                   console.log("access token");
                   console.log(data.access_token);
                   this.accessToken = data.access_token;
-                  this.getVotes();
-                  this.retrieveSongs();
+                  this.start();
                   //go to playlists
               },
               error => console.error(error)
@@ -52,8 +51,12 @@ export class VoteComponent implements OnInit {
     });
   }
 
+  async start(){
+    await this.getVotes();
+    await this.retrieveSongs();
+  }
   retrieveSongs(){
-    if(this.tempData.length == 0){
+    if(this.songsFromDB.length == 0){
       this.getSongs(this.accessToken, this.name);
     }
     else{
@@ -127,8 +130,8 @@ export class VoteComponent implements OnInit {
     this.mainService.getVotes(this.name)
     .subscribe(
       data => {
-        this.tempData = data;
-        console.log(this.tempData);
+        this.songsFromDB = data;
+        console.log(this.songsFromDB);
       },
       error => console.log(error)
     );
