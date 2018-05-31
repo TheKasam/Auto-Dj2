@@ -141,10 +141,9 @@ router.get('/getplaylistSongs', function(req, res, next) {
 
 router.post('/createDJPlaylist', function(req, res, next){
     console.log("creating DJ Playlist");
-    console.log(req);
-    var accesstoken = JSON.parse(req.query.updates[0]).value;
-
-    var token = JSON.parse(req.query.updates[1]).value;
+    console.log(req.body.params.updates[0].value);
+    var accesstoken = req.body.params.updates[0].value;
+    var token = req.body.params.updates[1].value;
     spotifyApi.setAccessToken(accesstoken);
     spotifyApi.getMe(function(err, data) {
         if (err) {
