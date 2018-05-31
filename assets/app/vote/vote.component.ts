@@ -32,23 +32,18 @@ export class VoteComponent implements OnInit {
   current_songs: Song[] =[];
 
   getToken() {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        console.log(this.name)
-        this.mainService.getAccessToken(this.name)
-          .subscribe(
-              data => {
-                  console.log("access token");
-                  console.log(data.access_token);
-                  this.accessToken = data.access_token;
-                  this.start();
-                  //go to playlists
-              },
-              error => console.error(error)
-           );
-        resolve();
-      }, 1);
-    });
+    console.log(this.name);
+    this.mainService.getAccessToken(this.name)
+      .subscribe(
+          data => {
+              console.log("access token");
+              console.log(data.access_token);
+              this.accessToken = data.access_token;
+              this.start();
+              //go to playlists
+          },
+          error => console.error(error)
+      );
   }
 
   async start(){
@@ -140,10 +135,10 @@ export class VoteComponent implements OnInit {
           data => {
             this.songsFromDB = data;
             console.log(this.songsFromDB);
+            this.updateVotes();
           },
           error => console.log(error)
         );
-        this.updateVotes();
         resolve();
       }, 1);
     });
