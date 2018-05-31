@@ -170,12 +170,17 @@ export class VoteComponent implements OnInit {
   
   buttons = ["white","white","white"]
   setCurrentButton(index){
-
+    var found = false;
     for (var i=0; i<3; i++) {
       if (this.buttons[i]=="green"){
         console.log(i);
         this.subtractVote(this.current_songs[i].id)
+        found = true
       }
+    }
+    if (found == false){
+      this.getCurrentSongs();
+
     }
     
 
