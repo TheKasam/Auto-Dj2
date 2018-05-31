@@ -30,6 +30,7 @@ export class VoteComponent implements OnInit {
   //used to select random songs
   songsNumArr = [];
   current_songs: Song[] =[];
+  current_songs_from_spotify: Song[] =[];
 
   getToken() {
     console.log(this.name);
@@ -39,14 +40,14 @@ export class VoteComponent implements OnInit {
               console.log("access token");
               console.log(data.access_token);
               this.accessToken = data.access_token;
-              this.start();
+              this.getCurrentSongs();
               //go to playlists
           },
           error => console.error(error)
       );
   }
 
-  async start(){
+  async getCurrentSongs(){
     await this.getVotes();
     
     await this.retrieveSongs();
@@ -133,22 +134,36 @@ export class VoteComponent implements OnInit {
       var randNum = Math.floor((Math.random() * this.songsNumArr.length) + 0);
       console.log(randNum);
       console.log(this.songs[randNum]);
-      this.current_songs.push(this.songs[this.songsNumArr[randNum]]);
+      this.current_songs_from_spotify.push(this.songs[this.songsNumArr[randNum]]);
       this.songsNumArr.splice(randNum,1);   
     
     }
-    this.pushSong(0);
-    this.pushSong(1);
-    this.pushSong(2);
-    this.start();
+    this.pushSongs();
+  
   }
 
-  pushSong(index){
-    this.mainService.pushToCurrentSongs(this.songs[index],this.name)
+  pushSongs(){
+    this.mainService.pushToCurrentSongs(this.songs[0],this.name)
     .subscribe(
       data => console.log(data),
       error => console.error(error)
     );   
+    this.mainService.pushToCurrentSongs(this.songs[1],this.name)
+    .subscribe(
+      data => console.log(data),
+      error => console.error(error)
+    );   
+    this.mainService.pushToCurrentSongs(this.songs[2],this.name)
+    .subscribe(
+      data => {
+        console.log(data);
+        this.getCurrentSongs();
+
+       
+      },
+      error => console.error(error)
+    );   
+    
   }
 
   updateVotes(songID){
@@ -156,7 +171,7 @@ export class VoteComponent implements OnInit {
     .subscribe(
       data => {
         console.log(data);
-        this.start();
+        this.getCurrentSongs();
       },
       error => console.log(error)
     );
