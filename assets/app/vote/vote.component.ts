@@ -140,6 +140,7 @@ export class VoteComponent implements OnInit {
     this.pushSong(0);
     this.pushSong(1);
     this.pushSong(2);
+    this.start();
   }
 
   pushSong(index){
