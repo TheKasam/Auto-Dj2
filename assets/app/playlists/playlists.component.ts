@@ -18,12 +18,29 @@ export class PlaylistsComponent implements OnInit {
   ngOnInit() {
     //async function
     this.start();
+    this.update();
   }
   
   //Mark:- Variables
   accessToken = "";
   name = "bob";
   playlists: Playlist[];
+
+  update(){
+    var ifCreate = true;
+    for(var i = 0; i < this.playlists.length; i++){
+      if(this.playlists[i].name == "AutoDJPlaylist"){
+        ifCreate = false;
+      }
+    }
+    if(ifCreate){
+      this.mainService.createDJPlaylist(this.name)
+      .subscribe(
+        data => console.log(data),
+        error => console.log(error)
+      );
+    }
+  }
 
   async start(){
     await this.getUserId();
