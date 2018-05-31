@@ -32,6 +32,7 @@ export class VoteComponent implements OnInit {
   current_songs: Song[] =[];
   current_songs_from_spotify: Song[] =[];
 
+  
   getToken() {
     console.log(this.name);
     this.mainService.getAccessToken(this.name)
@@ -166,15 +167,37 @@ export class VoteComponent implements OnInit {
     
   }
 
-  updateVotes(songID){
+  
+  buttons = ["white","white","white"]
+  setCurrentButton(index){
+    if (index == 0){
+      this.buttons[0] = "green"
+      this.buttons[1] = "white"
+      this.buttons[2] = "white"
+    }
+    else if (index == 1){
+      this.buttons[0] = "white"
+      this.buttons[1] = "green"
+      this.buttons[2] = "white"
+    }
+    else if (index == 2){
+      this.buttons[0] = "white"
+      this.buttons[1] = "white"
+      this.buttons[2] = "green"
+    }
+  }
+
+  updateVotes(songID,index){
     this.mainService.updateSongVote(songID)
     .subscribe(
       data => {
         console.log(data);
         this.getCurrentSongs();
+        this.setCurrentButton(index);
       },
       error => console.log(error)
     );
   }
+
 
 }

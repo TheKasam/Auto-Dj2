@@ -19,8 +19,8 @@
     padding-top: 5px;
     padding-bottom:  5px;
   background-size: contain;
-  }
-  .submits{
+}
+.btn{
     order: 1;
     background-color: white;
     border-radius: 100px;
@@ -31,4 +31,7 @@
       padding-left: 50px;
       padding-right: 50px;
   
+  }
+  .selected{
+    background-color: green;
   }
