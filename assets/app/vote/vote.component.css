@@ -5,19 +5,19 @@
     align-items: center;
   }
 
-.submit{
-    order: 1;
-    border: none;
-    border-width: 0px;
-    font-size:19pt;
-    width: 60%;
-    text-align: center;
-    color: white;
-    background-image: url("assets/heart.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    padding-top: 5px;
-    padding-bottom:  5px;
+.votes{
+  order: 1;
+  border: none;
+  border-width: 0px;
+  font-size:19pt;
+  width: 60%;
+  text-align: center;
+  color: white;
+  background-image: url("../assets/heart.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-top: 5px;
+  padding-bottom:  5px;
   background-size: contain;
 }
 .btn{
@@ -27,10 +27,10 @@
     border: none;
     border-width: 0px;
     margin-top:  10px;
-      font-size:19pt;
-      padding-left: 50px;
-      padding-right: 50px;
-  
+    font-size:19pt;
+    padding-left: 50px;
+    padding-right: 50px;
+
   }
   .selected{
     background-color: green;

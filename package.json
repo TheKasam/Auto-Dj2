@@ -40,6 +40,7 @@
     "spotify-web-api-js": "^0.24.0",
     "spotify-web-api-node": "^3.1.1",
     "style-loader": "^0.20.3",
+    "to-string-loader": "^1.1.5",
     "xmlhttprequest": "^1.8.0",
     "zone.js": "^0.8.5"
   },
@@ -50,7 +51,7 @@
     "angular-router-loader": "^0.5.0",
     "angular2-template-loader": "^0.5.0",
     "awesome-typescript-loader": "^3.1.2",
-    "css-loader": "^0.28.10",
+    "css-loader": "^0.28.11",
     "del-cli": "^0.2.0",
     "file-loader": "^1.1.11",
     "html-loader": "^0.4.4",

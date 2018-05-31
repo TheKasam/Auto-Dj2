@@ -68,7 +68,7 @@ export class VoteComponent implements OnInit {
           error => console.log(error)
         );
 
-
+              
         resolve();
       }, 1);
     });
