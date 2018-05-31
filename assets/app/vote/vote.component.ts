@@ -124,6 +124,12 @@ export class VoteComponent implements OnInit {
       },
       error => console.log(error)
     );
+    
   }
+
+  /*updateVotes(){
+    this.mainService.updateSongVote(this.)
+
+  }*/
 
 }
