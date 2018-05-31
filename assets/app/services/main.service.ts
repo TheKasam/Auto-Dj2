@@ -124,7 +124,7 @@ export class MainService {
             : '';
         let params = new HttpParams().set("id",userID).set("token",token); //Create new HttpParams
         const headers = new Headers({'Content-Type': 'application/json'});
-        return this.http.get('http://localhost:3000/user/getVotes', {headers: headers, params: params})
+        return this.http.get('http://localhost:3000/user/getSongVote', {headers: headers, params: params})
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));   
     }

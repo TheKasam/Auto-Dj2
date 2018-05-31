@@ -42,7 +42,8 @@ router.get('/getAccessToken', function(req, res) {
 router.get('/getSongVote', function(req, res) {
     //check if user exists
 
-    var id = (req.query.updates).value
+    var id = JSON.parse(req.query.updates[0]).value;
+    console.log("loggin gid");
     console.log(id);
 
     ShareableCode.findOne({user: id}, function(err, code) {
