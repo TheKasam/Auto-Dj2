@@ -55,13 +55,19 @@ export class VoteComponent implements OnInit {
     await this.getVotes();
     await this.retrieveSongs();
   }
-  retrieveSongs(){
-    if(this.songsFromDB.length == 0){
-      this.getSongs(this.accessToken, this.name);
-    }
-    else{
 
-    }
+  retrieveSongs(){
+    return new Promise(resolve => {
+      setTimeout(() => {
+        if(this.songsFromDB.length == 0){
+          this.getSongs(this.accessToken, this.name);
+          resolve();
+        }
+        else{
+          resolve();
+        }
+      }, 1);
+    });
   }
 
   randomCodeGenerator(){
@@ -127,20 +133,28 @@ export class VoteComponent implements OnInit {
   }
 
   getVotes(){
-    this.mainService.getVotes(this.name)
-    .subscribe(
-      data => {
-        this.songsFromDB = data;
-        console.log(this.songsFromDB);
-      },
-      error => console.log(error)
-    );
-    
+    return new Promise(resolve => {
+      setTimeout(() => {
+        this.mainService.getVotes(this.name)
+        .subscribe(
+          data => {
+            this.songsFromDB = data;
+            console.log(this.songsFromDB);
+          },
+          error => console.log(error)
+        );
+        this.updateVotes();
+        resolve();
+      }, 1);
+    });
   }
 
-  /*updateVotes(){
-    this.mainService.updateSongVote(this.)
-
-  }*/
+  updateVotes(){
+    this.mainService.updateSongVote(this.songsFromDB[0].id)
+    .subscribe(
+      data => console.log(data),
+      error => console.log(error)
+    );
+  }
 
 }
