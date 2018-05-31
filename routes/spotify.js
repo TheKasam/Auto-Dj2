@@ -210,6 +210,7 @@ router.post('/playFirstSong', function(req, res, next){
                     error: err
                 });
             }
+            console.log("im gay");
             console.log(data.body);
             res.status(200).json({
                 message: 'Successfully played first song'
