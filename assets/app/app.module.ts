@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpModule } from "@angular/http";
 import {HttpClientModule} from '@angular/common/http';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from './header/header.component';
@@ -30,7 +32,7 @@ const appRoutes: Routes =  [
         PlaylistsComponent,
         VoteComponent
     ],
-    imports: [BrowserModule, RouterModule.forRoot(appRoutes),HttpModule,HttpClientModule],
+    imports: [BrowserModule, RouterModule.forRoot(appRoutes),HttpModule,HttpClientModule,NgbModule],
     providers: [AuthService, MainService],
     bootstrap: [AppComponent]
 })
