@@ -83,7 +83,7 @@ export class VoteComponent implements OnInit {
           this.current_songs = this.songsFromDB;
           resolve();
         }
-      }, 50);
+      }, 500);
     });
   }
 
