@@ -188,13 +188,13 @@ export class MainService {
         return this.decision_factor;
     }
 
-    playFirstSong(){
+    playFirstSong(accesstoken: string){
         console.log("playing first song");
         const headers = new Headers({'Content-Type': 'application/json'});        
         const token = localStorage.getItem('token')
         ? '' + localStorage.getItem('token')
         : '';
-        let params = new HttpParams().set("accesstoken",accesstoken).set("token",token);
+        let params = new HttpParams().set("accesstoken",accesstoken).set("playlistid",this.current_playlist_id).set("token",token);
         return this.http.post('http://localhost:3000/spotify/playFirstSong', {headers: headers, params: params})
             .map((response: Response) => {
                 return response.json().message})
