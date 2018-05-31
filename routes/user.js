@@ -229,16 +229,16 @@ router.post('/clearCurrentSongs', function (req, res, next) {
 });
 
 router.post('/updateVote', function (req, res, next){
-
-    var songId = JSON.parse(req.body.params.updates[0].value);
     console.log("songId");
-    console.log(req.body.params);
+    console.log(req.body.params.updates[0].value);
+    var songId = req.body.params.updates[0].value;
+   
     var token = req.body.params.updates[1].value;
 
     var decoded = jwt.decode(token);
 
     Song.findOne({id: songId}, function(err, songToSave) {
-        console.log("code" ,code);
+        console.log("song to save" ,songToSave);
         if (err) {
             return res.status(500).json({
                 title: 'An error occurred0',
