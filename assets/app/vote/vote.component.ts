@@ -44,9 +44,10 @@ export class VoteComponent implements OnInit {
               console.log(data.access_token);
               this.accessToken = data.access_token;
               this.getCurrentSongs();
+              /*
               if(!this.already_called){
                 this.playFirstSong();
-              }
+              }*/
               //go to playlists
           },
           error => console.error(error)
