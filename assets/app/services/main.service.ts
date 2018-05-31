@@ -16,6 +16,8 @@ export class MainService {
     playlists: Playlist[] = [];
     songs: Song[] = [];
     access_token: string = "";
+    decision_factor = false;
+    current_playlist_id = "";
     
     getPlaylists(authId,userId){
         let params = new HttpParams().set("authId",authId).set("userID",userId);
@@ -80,6 +82,8 @@ export class MainService {
         let params = new HttpParams().set("playlist",playlistStringify).set("token",token).set("id",String(userID));
         return this.http.post('http://localhost:3000/user/setCurrentPlaylist', {headers: headers, params: params})
             .map((response: Response) => {
+                this.decision_factor = response.json().decision;
+                this.current_playlist_id = response.json().playlist_id;
                 return response.json().decision})
             .catch((error: Response) => Observable.throw(error.json()));
     }
@@ -175,6 +179,23 @@ export class MainService {
         : '';
         let params = new HttpParams().set("accesstoken",accesstoken).set("token",token);
         return this.http.post('http://localhost:3000/spotify/createDJPlaylist', {headers: headers, params: params})
+            .map((response: Response) => {
+                return response.json().message})
+            .catch((error: Response) => Observable.throw(error.json()));
+    }
+
+    returnDecisionFactor(){
+        return this.decision_factor;
+    }
+
+    playFirstSong(){
+        console.log("playing first song");
+        const headers = new Headers({'Content-Type': 'application/json'});        
+        const token = localStorage.getItem('token')
+        ? '' + localStorage.getItem('token')
+        : '';
+        let params = new HttpParams().set("accesstoken",accesstoken).set("token",token);
+        return this.http.post('http://localhost:3000/spotify/playFirstSong', {headers: headers, params: params})
             .map((response: Response) => {
                 return response.json().message})
             .catch((error: Response) => Observable.throw(error.json()));

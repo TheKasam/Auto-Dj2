@@ -224,6 +224,16 @@ export class VoteComponent implements OnInit {
   }
 
   playFirstSong(){
+    var decision_factor = this.mainService.returnDecisionFactor;
+    if(decision_factor){
+      this.mainService.playFirstSong()
+      .subscribe(
+        data => console.log(data),
+        error => console.error(error)
+      );
+    }
+    else{
 
+    }
   }
 }

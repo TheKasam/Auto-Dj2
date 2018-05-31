@@ -134,7 +134,7 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
                 }
                 res.status(201).json({
                     message: 'Saved code',
-                    obj: result,
+                    playlist_id: result.id,
                     decision: newPlaylist
                 }); 
             });
