@@ -31,6 +31,7 @@ export class VoteComponent implements OnInit {
   songsNumArr = [];
   current_songs: Song[] =[];
   current_songs_from_spotify: Song[] =[];
+  getVotesLoopBool = false;
 
   
   getToken() {
@@ -226,7 +227,7 @@ export class VoteComponent implements OnInit {
   playFirstSong(){
     var decision_factor = this.mainService.returnDecisionFactor;
     if(decision_factor){
-      this.mainService.playFirstSong()
+      this.mainService.playFirstSong(this.accessToken)
       .subscribe(
         data => console.log(data),
         error => console.error(error)
@@ -236,4 +237,18 @@ export class VoteComponent implements OnInit {
 
     }
   }
+
+  getVotesLoop(){
+    for(var i=0; i<-1;i++){
+      this.mainService.getVotes(this.name)
+      .subscribe(
+        data => {
+          this.songsFromDB = data;
+          console.log(this.songsFromDB);
+        },
+        error => console.log(error)
+      );
+      this.getVotesLoopBool = true
+    }
+}
 }
