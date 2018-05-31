@@ -230,11 +230,11 @@ router.post('/clearCurrentSongs', function (req, res, next) {
 
 router.post('/updateVote', function (req, res, next){
 
-    var songId = JSON.parse(req.body.params.updates[0].value)
+    var songId = JSON.parse(req.body.params.updates[0].value);
+    console.log("songId");
     console.log(req.body.params);
-    var token = req.body.params.updates[1].value
+    var token = req.body.params.updates[1].value;
 
-    console.log( song.name);
     var decoded = jwt.decode(token);
 
     Song.findOne({id: songId}, function(err, songToSave) {
