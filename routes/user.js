@@ -53,11 +53,21 @@ router.get('/getSongVote', function(req, res) {
               error: err
           });
       }
+
+      Song.find({code: code._id}, function(err, songs) {
+    
+        console.log(songs);
+        res.status(200).json({
+            message: 'Successfully retrieved votes',
+            obj: songs
+          });
+
+
+      });
       
-      res.status(200).json({
-          message: 'Successfully retrieved votes',
-          obj: code.songs_vote
-        });
+      
+
+
     });
 });
 
