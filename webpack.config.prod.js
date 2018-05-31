@@ -30,6 +30,10 @@ module.exports = webpackMerge.smart(commonConfig, {
                     'angular2-template-loader',
                     // 'angular-router-loader?aot=true'
                 ]
+            },
+            {
+                test: /\.(gif|svg|jpg|png)$/,
+                loader: "file-loader",
             }
         ]
     },

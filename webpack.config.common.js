@@ -17,7 +17,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [{ loader: 'raw-loader' }]
+                use: [ {loader: 'to-string-loader'},  {loader: 'css-loader'} ]
             }
         ],
         exprContextCritical: false
