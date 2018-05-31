@@ -48,7 +48,29 @@ export class VoteComponent implements OnInit {
 
   async start(){
     await this.getVotes();
+    
     await this.retrieveSongs();
+  }
+
+  getVotes(){
+    return new Promise(resolve => {
+      setTimeout(() => {
+
+
+        this.mainService.getVotes(this.name)
+        .subscribe(
+          data => {
+            this.songsFromDB = data;
+            console.log(this.songsFromDB);
+            //this.updateVotes();
+          },
+          error => console.log(error)
+        );
+
+
+        resolve();
+      }, 1);
+    });
   }
 
   retrieveSongs(){
@@ -61,7 +83,7 @@ export class VoteComponent implements OnInit {
         else{
           resolve();
         }
-      }, 1);
+      }, 100);
     });
   }
 
@@ -124,24 +146,6 @@ export class VoteComponent implements OnInit {
       data => console.log(data),
       error => console.error(error)
     );   
-    this.getVotes();
-  }
-
-  getVotes(){
-    return new Promise(resolve => {
-      setTimeout(() => {
-        this.mainService.getVotes(this.name)
-        .subscribe(
-          data => {
-            this.songsFromDB = data;
-            console.log(this.songsFromDB);
-            this.updateVotes();
-          },
-          error => console.log(error)
-        );
-        resolve();
-      }, 1);
-    });
   }
 
   updateVotes(){
