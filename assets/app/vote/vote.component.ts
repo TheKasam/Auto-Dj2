@@ -198,6 +198,15 @@ export class VoteComponent implements OnInit {
       error => console.log(error)
     );
   }
-
+  subtractVote(songID,index){
+    this.mainService.subtractSongVote(songID)
+    .subscribe(
+      data => {
+        console.log(data);
+      
+      },
+      error => console.log(error)
+    );
+  }
 
 }

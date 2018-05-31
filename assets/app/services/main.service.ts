@@ -152,6 +152,20 @@ export class MainService {
                 return response.json().message})
             .catch((error: Response) => Observable.throw(error.json()));
     }
+    subtractSongVote(songID: string){
+        console.log("calling push songs");
+
+        const headers = new Headers({'Content-Type': 'application/json'});
+        const token = localStorage.getItem('token')
+            ? '' + localStorage.getItem('token')
+            : '';
+        
+        let params = new HttpParams().set("songID",songID).set("token",token);
+        return this.http.post('http://localhost:3000/user/subtracteVote', {headers: headers, params: params})
+            .map((response: Response) => {
+                return response.json().message})
+            .catch((error: Response) => Observable.throw(error.json()));
+    }
 
     createDJPlaylist(accesstoken: string){
         console.log("creating the DJ playlist");
