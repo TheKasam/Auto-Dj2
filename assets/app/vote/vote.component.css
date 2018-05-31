@@ -30,7 +30,7 @@
     font-size:19pt;
     padding-left: 50px;
     padding-right: 50px;
-
+    width: 300px;
   }
   .selected{
     background-color: green;
