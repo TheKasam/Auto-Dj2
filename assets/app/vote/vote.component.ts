@@ -62,7 +62,6 @@ export class VoteComponent implements OnInit {
           data => {
             this.songsFromDB = data;
             console.log(this.songsFromDB);
-            //this.updateVotes();
           },
           error => console.log(error)
         );
@@ -81,9 +80,10 @@ export class VoteComponent implements OnInit {
           resolve();
         }
         else{
+          this.current_songs = this.songsFromDB;
           resolve();
         }
-      }, 100);
+      }, 50);
     });
   }
 
@@ -148,10 +148,13 @@ export class VoteComponent implements OnInit {
     );   
   }
 
-  updateVotes(){
-    this.mainService.updateSongVote(this.songsFromDB[0].id)
+  updateVotes(songID){
+    this.mainService.updateSongVote(songID)
     .subscribe(
-      data => console.log(data),
+      data => {
+        console.log(data);
+        this.start();
+      },
       error => console.log(error)
     );
   }
