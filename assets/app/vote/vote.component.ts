@@ -32,6 +32,7 @@ export class VoteComponent implements OnInit {
   current_songs: Song[] =[];
   current_songs_from_spotify: Song[] =[];
   getVotesLoopBool = false;
+  already_called = false;
 
   
   getToken() {
@@ -43,6 +44,9 @@ export class VoteComponent implements OnInit {
               console.log(data.access_token);
               this.accessToken = data.access_token;
               this.getCurrentSongs();
+              if(!this.already_called){
+                this.playFirstSong();
+              }
               //go to playlists
           },
           error => console.error(error)
@@ -225,6 +229,7 @@ export class VoteComponent implements OnInit {
   }
 
   playFirstSong(){
+    this.already_called = true;
     var decision_factor = this.mainService.returnDecisionFactor;
     if(decision_factor){
       this.mainService.playFirstSong(this.accessToken)
