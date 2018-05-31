@@ -137,11 +137,13 @@ export class VoteComponent implements OnInit {
       this.songsNumArr.splice(randNum,1);   
     
     }
-    this.pushSong();
+    this.pushSong(0);
+    this.pushSong(1);
+    this.pushSong(2);
   }
 
-  pushSong(){
-    this.mainService.pushToCurrentSongs(this.songs[0],this.name)
+  pushSong(index){
+    this.mainService.pushToCurrentSongs(this.songs[index],this.name)
     .subscribe(
       data => console.log(data),
       error => console.error(error)
