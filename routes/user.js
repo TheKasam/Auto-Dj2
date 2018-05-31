@@ -228,6 +228,50 @@ router.post('/clearCurrentSongs', function (req, res, next) {
     });
 });
 
+router.post('/updateVote', function (req, res, next){
 
+    // var songId = JSON.parse(req.body.params.updates[0].value)
+    console.log(req.body.params);
+    // var token = req.body.params.updates[1].value
+    // var id = req.body.params.updates[2].value
+    // console.log("req");
+
+    // console.log( song.name);
+    // var decoded = jwt.decode(token);
+
+    // ShareableCode.findOne({user: id}, function(err, code) {
+    //     console.log("code" ,code);
+    //     if (err) {
+    //         return res.status(500).json({
+    //             title: 'An error occurred0',
+    //             error: err
+    //         });
+    //     }
+    //     var songToSave = new Song({
+    //         name: song.name,
+    //         id: song.id,
+    //         votes: 0,
+    //         code: code._id
+    //     });
+
+    //     songToSave.save(function (err, result) {
+    //         console.log("logging song", result);
+
+    //         if (err) {
+    //             return res.status(500).json({
+    //                 title: 'An error occurred',
+    //                 error: err
+    //             });
+    //         }
+    //         code.songs_vote.push(result);
+    //         code.save();
+    //         res.status(201).json({
+    //             message: 'Saved code',
+    //             obj: result
+    //         });
+    
+    //     });
+    // });
+});
 
 module.exports = router;

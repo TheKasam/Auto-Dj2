@@ -17,8 +17,6 @@ export class MainService {
     songs: Song[] = [];
     access_token: string = "";
     
-
-
     getPlaylists(authId,userId){
         let params = new HttpParams().set("authId",authId).set("userID",userId);
         const headers = new Headers({'Content-Type': 'application/json'});
@@ -60,7 +58,6 @@ export class MainService {
             .catch((error: Response) => Observable.throw(error.json()));
     }
 
-
     getAccessToken(userID: string){
         console.log("Get acces token");
         let params = new HttpParams().set("id",userID) //Create new HttpParams
@@ -69,7 +66,6 @@ export class MainService {
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));
     }
-
 
     updateCurrentPlaylist(playlist: Playlist, userID: String) {
         
@@ -127,5 +123,20 @@ export class MainService {
         return this.http.get('http://localhost:3000/user/getSongVote', {headers: headers, params: params})
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));   
+    }
+
+    updateSongVote(songID: string){
+        console.log("calling push songs");
+
+        const headers = new Headers({'Content-Type': 'application/json'});
+        const token = localStorage.getItem('token')
+            ? '' + localStorage.getItem('token')
+            : '';
+        
+        let params = new HttpParams().set("songID",songID).set("token",token);
+        return this.http.post('http://localhost:3000/user/updateVote', {headers: headers, params: params})
+            .map((response: Response) => {
+                return response.json().message})
+            .catch((error: Response) => Observable.throw(error.json()));
     }
 }
