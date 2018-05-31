@@ -23,12 +23,14 @@ export class VoteComponent implements OnInit {
 
   accessToken = "";
   name = localStorage.getItem('userId');
+  tempData;
   code = this.randomCodeGenerator();
   randNum = Math.floor((Math.random() * 3) + 0);
   songs: Song[];
   //used to select random songs
   songsNumArr = [];
   current_songs: Song[] =[];
+
   getToken() {
     return new Promise(resolve => {
       setTimeout(() => {
@@ -39,7 +41,8 @@ export class VoteComponent implements OnInit {
                   console.log("access token");
                   console.log(data.access_token);
                   this.accessToken = data.access_token;
-                  this.getSongs(this.accessToken, this.name);
+                  this.getVotes();
+                  this.retrieveSongs();
                   //go to playlists
               },
               error => console.error(error)
@@ -47,6 +50,15 @@ export class VoteComponent implements OnInit {
         resolve();
       }, 1);
     });
+  }
+
+  retrieveSongs(){
+    if(this.tempData.length == 0){
+      this.getSongs(this.accessToken, this.name);
+    }
+    else{
+
+    }
   }
 
   randomCodeGenerator(){
@@ -88,8 +100,6 @@ export class VoteComponent implements OnInit {
   selectSongs(){
     for (var i = 0; i < this.songs.length; i++){
       this.songsNumArr.push(i);
-
-      
     }
     for (var i = 0; i < 3; i++){
       
@@ -117,10 +127,8 @@ export class VoteComponent implements OnInit {
     this.mainService.getVotes(this.name)
     .subscribe(
       data => {
-        if(data.obj.length == 0){
-          this.selectSongs();
-        }
-        console.log(data);
+        this.tempData = data;
+        console.log(this.tempData);
       },
       error => console.log(error)
     );
