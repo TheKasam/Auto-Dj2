@@ -48,7 +48,8 @@ export class MainService {
                 for (let song of songsFetch) {
                     this.songs.push(new Song(
                         song.id,
-                        song.name
+                        song.name,
+                        0
                         )
                     );
                 }
@@ -127,7 +128,8 @@ export class MainService {
                 for (let song of songsFetch) {
                     songsToReturn.push(new Song(
                         song.id,
-                        song.name
+                        song.name,
+                        song.votes
                         )
                     );
                 }
