@@ -114,18 +114,16 @@ export class VoteComponent implements OnInit {
   }
 
   getVotes(){
-    var returned;
     this.mainService.getVotes(this.name)
     .subscribe(
       data => {
-        returned = data;
+        if(data.obj.length == 0){
+          this.selectSongs();
+        }
         console.log(data);
       },
       error => console.log(error)
     );
-    if(returned.obj.length == 0){
-      this.selectSongs();
-    }
   }
 
 }
