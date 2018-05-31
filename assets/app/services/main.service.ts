@@ -121,7 +121,18 @@ export class MainService {
         let params = new HttpParams().set("id",userID).set("token",token); //Create new HttpParams
         const headers = new Headers({'Content-Type': 'application/json'});
         return this.http.get('http://localhost:3000/user/getSongVote', {headers: headers, params: params})
-            .map((response: Response) => response.json())
+            .map((response: Response) => {
+                const songsFetch = response.json().obj;
+                let songsToReturn: Song[] = [];
+                for (let song of songsFetch) {
+                    songsToReturn.push(new Song(
+                        song.id,
+                        song.name
+                        )
+                    );
+                }
+                return songsToReturn;
+            })
             .catch((error: Response) => Observable.throw(error.json()));   
     }
 
