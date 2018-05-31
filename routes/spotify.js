@@ -139,4 +139,35 @@ router.get('/getplaylistSongs', function(req, res, next) {
     });
 });
 
+router.post('/createDJPlaylist', function(req, res, next){
+    console.log("creating DJ Playlist");
+    var accesstoken = req.body.params.updates[0].value;
+    var token = req.body.params.updates[1].value;
+
+    var decoded = jwt.decode(token);
+    spotifyApi.setAccessToken(accesstoken);
+    spotifyApi.getMe(function(err, data) {
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: err
+            });
+        }
+        console.log(data);
+        spotifyApi.createPlaylist(data.body.id, "AutoDJPlaylist", function(err, data){
+            console.log("inside");
+            console.log(err);
+            if (err) {
+                return res.status(500).json({
+                    title: 'An error occurred',
+                    error: err
+                });
+            }
+            res.status(200).json({
+                message: 'Successfully created DJ playlist'
+            });
+        });
+    });  
+});
+
 module.exports = router;

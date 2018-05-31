@@ -153,15 +153,15 @@ export class MainService {
             .catch((error: Response) => Observable.throw(error.json()));
     }
 
-    createDJPlaylist(name: string){
+    createDJPlaylist(accesstoken: string){
         console.log("creating the DJ playlist");
         const headers = new Headers({'Content-Type': 'application/json'});
         const token = localStorage.getItem('token')
             ? '' + localStorage.getItem('token')
             : '';
         
-        let params = new HttpParams().set("name",name).set("token",token);
-        return this.http.post('http://localhost:3000/user/createDJPlaylist', {headers: headers, params: params})
+        let params = new HttpParams().set("accesstoken",accesstoken).set("token",token);
+        return this.http.post('http://localhost:3000/spotify/createDJPlaylist', {headers: headers, params: params})
             .map((response: Response) => {
                 return response.json().message})
             .catch((error: Response) => Observable.throw(error.json()));
