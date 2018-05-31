@@ -1,4 +1,4 @@
-<span>
+<div class="all">
   Playlists
   1
   {{name}}
@@ -8,4 +8,4 @@
   <div *ngFor="let playlist of playlists; let i = index">
     <button type="button" (click)="selectPlaylist(playlist)" class="btn btn-success">{{playlist.name}}</button>
   </div>
-</span>
+</div>
