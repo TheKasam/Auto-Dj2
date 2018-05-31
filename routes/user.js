@@ -88,7 +88,7 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
     Playlist.findOneAndUpdate({user: id}, { name: JSON.parse(playlist).name, id:JSON.parse(playlist).id  }, { upsert:true, new: true}, function(err, result){
         if (err) {
             return res.status(500).json({
-                title: 'An error occurred0',
+                title: 'An error occurred',
                 error: err
             });
         }
@@ -96,7 +96,7 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
         User.findOne({_id: id}, function(err, user) {
             if (err) {
                 return res.status(500).json({
-                    title: 'An error occurred0',
+                    title: 'An error occurred',
                     error: err
                 });
             }
