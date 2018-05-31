@@ -143,17 +143,17 @@ export class VoteComponent implements OnInit {
   }
 
   pushSongs(){
-    this.mainService.pushToCurrentSongs(this.songs[0],this.name)
+    this.mainService.pushToCurrentSongs(this.current_songs_from_spotify[0],this.name)
     .subscribe(
       data => console.log(data),
       error => console.error(error)
     );   
-    this.mainService.pushToCurrentSongs(this.songs[1],this.name)
+    this.mainService.pushToCurrentSongs(this.current_songs_from_spotify[1],this.name)
     .subscribe(
       data => console.log(data),
       error => console.error(error)
     );   
-    this.mainService.pushToCurrentSongs(this.songs[2],this.name)
+    this.mainService.pushToCurrentSongs(this.current_songs_from_spotify[2],this.name)
     .subscribe(
       data => {
         console.log(data);
