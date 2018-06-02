@@ -67,8 +67,9 @@ router.get('/getSongVote', function(req, res) {
 
 router.get('/getUser', function(req, res) {
     //check if user exists
+    console.log("loggin getUser");
+
     var id = JSON.parse(req.query.updates[0]).value;
-    console.log("loggin gid");
     console.log(id);
 
     User.findOne({_id: id}, function(err, user) {

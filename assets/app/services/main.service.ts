@@ -18,7 +18,7 @@ export class MainService {
     access_token: string = "";
     decision_factor = false;
     current_playlist_id = "";
-    
+    current_playlist_id2 = "";
     getPlaylists(authId,userId){
         let params = new HttpParams().set("authId",authId).set("userID",userId);
         const headers = new Headers({'Content-Type': 'application/json'});
@@ -142,9 +142,9 @@ export class MainService {
             .catch((error: Response) => Observable.throw(error.json()));   
     }
     getUser(){
-        console.log("Get votes");
+        console.log("Get User");
         const userID: string = localStorage.getItem('userId');
-
+        console.log(userID);
         const token = localStorage.getItem('token')
             ? '' + localStorage.getItem('token')
             : '';
@@ -153,6 +153,9 @@ export class MainService {
         return this.http.get('http://localhost:3000/user/getUser', {headers: headers, params: params})
             .map((response: Response) => {
                 const user = response.json().obj;
+                console.log("logging user")
+                console.log(user);
+                this.current_playlist_id = user.current_playlist;
                 return user;
             })
             .catch((error: Response) => Observable.throw(error.json()));   
@@ -205,14 +208,27 @@ export class MainService {
 
     playFirstSong(accesstoken: string){
         console.log("playing first song");
-        const headers = new Headers({'Content-Type': 'application/json'});        
+
+     
+
+        console.log('hide');
+        console.log("this.current_playlist_id");
+        console.log(this.current_playlist_id);
+
+        const headers = new Headers({'Content-Type': 'application/json'});    
         const token = localStorage.getItem('token')
-        ? '' + localStorage.getItem('token')
-        : '';
+            ? '' + localStorage.getItem('token')
+            : '';
         let params = new HttpParams().set("accesstoken",accesstoken).set("playlistid",this.current_playlist_id);
         return this.http.post('http://localhost:3000/spotify/playFirstSong', {headers: headers, params: params})
-            .map((response: Response) => {
-                return response.json().message})
-            .catch((error: Response) => Observable.throw(error.json()));
-    }
+              .map((response: Response) => {return response.json().message})
+              .catch((error: Response) => Observable.throw(error.json()));
+          
+
+
+
+
+
+
+        }
 }
