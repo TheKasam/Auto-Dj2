@@ -180,9 +180,16 @@ router.post('/createDJPlaylist', function(req, res, next){
 
 router.post('/playFirstSong', function(req, res, next){
     console.log("adding to AutoDJ playlist and playing random");
+    console.log(req.body.params.updates);
     var accesstoken = req.body.params.updates[0].value;
     var playlist_id = req.body.params.updates[1].value;
-    var token = req.body.params.updates[2].value;
+
+
+
+    
+
+
+
     var client_id = '356fadb6961741c1ba6aac9966edbcbf'; // Your client id
     var client_secret = 'f3b9982a3e3347bfa60263d1d50fbbc2'; // Your secret
     var redirect_uri = 'http://localhost:3000/login/callback'; // Your redirect uri
@@ -200,7 +207,10 @@ router.post('/playFirstSong', function(req, res, next){
                 error: err
             });
         }
+        console.log("playlist_id");
+
         console.log(data);
+        console.log(playlist_id);
         spotifyApi.getPlaylist(data.body.id, playlist_id, function(err, data){
             console.log("inside");
             console.log(err);

@@ -60,14 +60,28 @@ router.get('/getSongVote', function(req, res) {
         res.status(200).json({
             message: 'Successfully retrieved votes',
             obj: songs
-          });
-
-
+        });
       });
-      
-      
+    });
+});
 
+router.get('/getUser', function(req, res) {
+    //check if user exists
+    var id = JSON.parse(req.query.updates[0]).value;
+    console.log("loggin gid");
+    console.log(id);
 
+    User.findOne({_id: id}, function(err, user) {
+        if (err) {
+            return res.status(500).json({
+              title: 'An error occurred',
+              error: err
+            });
+        }
+        res.status(200).json({
+            message: 'Successfully retrieved votes',
+            obj: user
+        });
     });
 });
 

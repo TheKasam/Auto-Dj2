@@ -44,10 +44,6 @@ export class VoteComponent implements OnInit {
               console.log(data.access_token);
               this.accessToken = data.access_token;
               this.getCurrentSongs();
-              //if(this.already_called == false){
-              // this.playFirstSong();
-              //}
-              //go to playlists
           },
           error => console.error(error)
       );
@@ -57,7 +53,8 @@ export class VoteComponent implements OnInit {
     await this.getVotes();
     
     await this.retrieveSongs();
-
+  
+    await this.playFirstSong();
   }
 
   getVotes(){
@@ -76,6 +73,29 @@ export class VoteComponent implements OnInit {
         resolve();
       }, 1);
     });
+  }
+
+  playFirstSong(){
+    return new Promise(resolve => {
+      setTimeout(() => {
+
+        var decision_factor = this.mainService.returnDecisionFactor();
+        if(decision_factor == false){
+          this.mainService.playFirstSong(this.accessToken)
+          .subscribe(
+            data => console.log(data),
+            error => console.error(error)
+          );
+        }
+        this.already_called = true;
+
+        
+        
+        resolve();
+      }, 1);
+    });
+
+    
   }
 
   retrieveSongs(){
@@ -224,21 +244,6 @@ export class VoteComponent implements OnInit {
       },
       error => console.log(error)
     );
-  }
-
-  playFirstSong(){
-    this.already_called = true;
-    var decision_factor = this.mainService.returnDecisionFactor();
-    if(decision_factor){
-      this.mainService.playFirstSong(this.accessToken)
-      .subscribe(
-        data => console.log(data),
-        error => console.error(error)
-      );
-    }
-    else{
-
-    }
   }
 
   getVotesLoop(){
