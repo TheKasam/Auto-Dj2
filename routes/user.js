@@ -200,6 +200,7 @@ router.post('/setShareableCode', function (req, res, next) {
 
 });
 
+
 router.post('/pushToCurrentSongs', function (req, res) {
 
     var song = JSON.parse(req.body.params.updates[0].value)
@@ -328,6 +329,39 @@ router.post('/subtractVote', function (req, res, next){
         });
     });
 });
+router.post('/setShareableCode', function (req, res, next) {
+    console.log("req");
+    console.log(req.body.params);
+    var autodj_playlistID = req.body.params.updates[0].value
+    var token = req.body.params.updates[1].value
+    var id = req.body.params.updates[2].value
 
+    var decoded = jwt.decode(token);
+
+    
+    User.findOne({_id: id}, function(err, user) {
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred0',
+                error: err
+            });
+        }
+        user.autodj_playlist_id = autodj_playlistID;
+        user.save(function (err, user) {
+            if (err) {
+                return res.status(500).json({
+                    title: 'couldnt save occurred',
+                    error: err
+                });
+            }
+            res.status(201).json({
+                message: 'Saved code',
+                obj: result
+            }); 
+        });
+    });
+    
+
+});
 
 module.exports = router;

@@ -9,7 +9,8 @@ var schema = new Schema({
     access_token: {type: String, required: false},
     refresh_token: {type: String, required: false},
     shareable_code: {type: Schema.Types.ObjectId, ref: 'Code'},
-    current_playlist: {type: Schema.Types.ObjectId, ref: 'Playlist'}
+    current_playlist: {type: Schema.Types.ObjectId, ref: 'Playlist'},
+    autodj_playlist_id: {type: String, required: false}
 });
 
 schema.plugin(mongooseUniqueValidator);
