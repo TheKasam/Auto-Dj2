@@ -207,13 +207,13 @@ router.post('/playFirstSong', function(req, res, next){
         console.log(data);
         console.log(playlist_id);
 
-
+        var userSpotifyID = data.body.id
         Playlist.findOne({
             _id: playlist_id
         }, function(err, playlist) {
         
 
-            spotifyApi.getPlaylist(data.body.id, playlist.id, {
+            spotifyApi.getPlaylist(userSpotifyID, playlist.id, {
                 limit: 10,
                 offset: 0
             }, function(err, data) {
@@ -243,6 +243,13 @@ router.post('/playFirstSong', function(req, res, next){
     
                 console.log(playlistsArray);
     
+                spotifyApi.addTracksToPlaylist(userSpotifyID, playlist.id, {
+                    position : 0
+                }, function(err, data) {
+        
+                }); // end of addTracksToPlaylist 
+
+                
                 res.status(200).json({
                     message: 'Success',
                     obj: playlistsArray
