@@ -33,7 +33,7 @@ export class PlaylistsComponent implements OnInit {
         ifCreate = false;
       }
     }
-    if(ifCreate){
+    if(true){ //ifCreate
       this.mainService.createDJPlaylist(this.accessToken)
       .subscribe(
         data => console.log(data),

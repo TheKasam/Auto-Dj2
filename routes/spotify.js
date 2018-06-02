@@ -164,7 +164,7 @@ router.post('/createDJPlaylist', function(req, res, next){
         console.log(data);
         spotifyApi.createPlaylist(data.body.id, "AutoDJPlaylist", function(err, data){
             console.log("createPlaylist inside");
-            console.log(data);
+            console.log(data.body);
             if (err) {
                 return res.status(500).json({
                     title: 'An error occurred',
@@ -173,7 +173,7 @@ router.post('/createDJPlaylist', function(req, res, next){
             }
             res.status(200).json({
                 message: 'Successfully created DJ playlist',
-                autodj_playlist_id: data.id
+                autodj_playlist_id: data.body.id
             });
         });
     });  

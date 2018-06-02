@@ -93,11 +93,6 @@ export class VoteComponent implements OnInit {
               );},
             error => console.error(error)
           );
-          
-
-
-
-
         }
         this.already_called = true;
 
