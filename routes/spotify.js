@@ -185,11 +185,6 @@ router.post('/playFirstSong', function(req, res, next){
     var playlist_id = req.body.params.updates[1].value;
 
 
-
-    
-
-
-
     var client_id = '356fadb6961741c1ba6aac9966edbcbf'; // Your client id
     var client_secret = 'f3b9982a3e3347bfa60263d1d50fbbc2'; // Your secret
     var redirect_uri = 'http://localhost:3000/login/callback'; // Your redirect uri
@@ -207,25 +202,62 @@ router.post('/playFirstSong', function(req, res, next){
                 error: err
             });
         }
-        console.log("playlist_id");
+        console.log("user data");
 
         console.log(data);
         console.log(playlist_id);
-        spotifyApi.getPlaylist(data.body.id, playlist_id, function(err, data){
-            console.log("inside");
-            console.log(err);
-            if (err) {
-                return res.status(500).json({
-                    title: 'An error occurred',
-                    error: err
+
+
+        Playlist.findOne({
+            _id: playlist_id
+        }, function(err, playlist) {
+        
+
+            spotifyApi.getPlaylist(data.body.id, playlist.id, {
+                limit: 10,
+                offset: 0
+            }, function(err, data) {
+    
+                console.log("inside");
+                console.log(err);
+                if (err) {
+                    return res.status(500).json({
+                        title: 'An error occurred',
+                        error: err
+                    });
+                }
+    
+                var playlistsArray = [];
+    
+                data.body.tracks.items.forEach(function(item) {
+                    console.log("track");
+                    console.log(item.track.id);
+                    var name = item.track.name;
+                    var id = item.track.id;
+                    playlistsArray.push({
+                        id: id,
+                        name: name
+                    });
                 });
-            }
-            console.log("im gay");
-            console.log(data.body);
-            res.status(200).json({
-                message: 'Successfully played first song'
-            });
+                console.log("playlistsArray");
+    
+                console.log(playlistsArray);
+    
+                res.status(200).json({
+                    message: 'Success',
+                    obj: playlistsArray
+                });
+            }); // end of spotify get
+
+
+
+
+
         });
+ 
+
+
+       
     });  
 });
 
