@@ -109,7 +109,7 @@ export class MainService {
             ? '' + localStorage.getItem('token')
             : '';
         
-        let params = new HttpParams().set("code",spotifyID).set("token",token).set("id",String(userID));
+        let params = new HttpParams().set("spotifyID",spotifyID).set("token",token).set("id",String(userID));
         return this.http.post('http://localhost:3000/user/setSpotifyCodeID', {headers: headers, params: params})
             .map((response: Response) => {
                 return response.json().obj})

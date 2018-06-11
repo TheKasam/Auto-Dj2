@@ -40,7 +40,7 @@ export class PlaylistsComponent implements OnInit {
           console.log("updateCurrentPlaylist");
           console.log(data);
           //set as current playlistfor user
-          this.mainService.setSpotifyCodeID(data.autodj_playlist_id,this.name)
+          this.mainService.setSpotifyCodeID(data,this.name)
             .subscribe(
               
               data => {
@@ -48,7 +48,6 @@ export class PlaylistsComponent implements OnInit {
                 console.log(data)},
               error => console.error(error)
             );    
-            console.log(data);
           },
         error => console.log(error)
       );

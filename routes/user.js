@@ -330,7 +330,7 @@ router.post('/subtractVote', function (req, res, next){
     });
 });
 router.post('/setSpotifyCodeID', function (req, res, next) {
-    console.log("req");
+    console.log("set Spotify Code ID ");
     console.log(req.body.params);
     var autodj_playlistID = req.body.params.updates[0].value
     var token = req.body.params.updates[1].value
@@ -347,7 +347,7 @@ router.post('/setSpotifyCodeID', function (req, res, next) {
             });
         }
         console.log("saving autodj_playlist_id ");
-        user.autodj_playlist_id = autodj_playlistID;
+        user.autodj_playlist_id = JSON.parse(autodj_playlistID);
         user.save(function (err, user) {
             if (err) {
                 return res.status(500).json({
