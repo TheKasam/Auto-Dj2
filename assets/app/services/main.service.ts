@@ -102,6 +102,20 @@ export class MainService {
             .catch((error: Response) => Observable.throw(error.json()));
     }
 
+    setSpotifyCodeID(sId: String, userID: String){
+        const headers = new Headers({'Content-Type': 'application/json'});
+        const spotifyID = JSON.stringify(sId);
+        const token = localStorage.getItem('token')
+            ? '' + localStorage.getItem('token')
+            : '';
+        
+        let params = new HttpParams().set("code",spotifyID).set("token",token).set("id",String(userID));
+        return this.http.post('http://localhost:3000/user/setSpotifyCodeID', {headers: headers, params: params})
+            .map((response: Response) => {
+                return response.json().message})
+            .catch((error: Response) => Observable.throw(error.json()));
+    }
+
     pushToCurrentSongs(song: Song, userID: String){
         console.log("calling push songs");
 

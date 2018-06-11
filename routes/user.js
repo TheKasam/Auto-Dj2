@@ -329,7 +329,7 @@ router.post('/subtractVote', function (req, res, next){
         });
     });
 });
-router.post('/setShareableCode', function (req, res, next) {
+router.post('/setSpotifyCodeID', function (req, res, next) {
     console.log("req");
     console.log(req.body.params);
     var autodj_playlistID = req.body.params.updates[0].value
@@ -346,6 +346,7 @@ router.post('/setShareableCode', function (req, res, next) {
                 error: err
             });
         }
+        console.log("saving autodj_playlist_id ");
         user.autodj_playlist_id = autodj_playlistID;
         user.save(function (err, user) {
             if (err) {
@@ -356,12 +357,11 @@ router.post('/setShareableCode', function (req, res, next) {
             }
             res.status(201).json({
                 message: 'Saved code',
-                obj: result
+                obj: user
             }); 
         });
     });
-    
-
 });
+
 
 module.exports = router;

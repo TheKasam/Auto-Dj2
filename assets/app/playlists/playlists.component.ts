@@ -36,7 +36,17 @@ export class PlaylistsComponent implements OnInit {
     if(true){ //ifCreate
       this.mainService.createDJPlaylist(this.accessToken)
       .subscribe(
-        data => console.log(data),
+        data => {console.log(data)
+          console.log("updateCurrentPlaylist");
+          console.log(data);
+          //set as current playlistfor user
+          this.mainService.setSpotifyCodeID(data.autodj_playlist_id,this.name)
+            .subscribe(
+              data => {console.log(data)},
+              error => console.error(error)
+            );    
+            console.log(data);
+          },
         error => console.log(error)
       );
     }
@@ -92,12 +102,17 @@ export class PlaylistsComponent implements OnInit {
     //set as current playlistfor user
     this.mainService.updateCurrentPlaylist(playlist,this.name)
       .subscribe(
-        data => console.log(data),
+        data => {
+          console.log(data);
+
+              //navigate to vote page
+        },
         error => console.error(error)
       );    
       console.log(playlist.id);
       //navigate to vote page
       this.router.navigate(['vote']);
+
   }
 
   // localStorage.setItem('name', name);
