@@ -80,7 +80,7 @@ export class VoteComponent implements OnInit {
       setTimeout(() => {
 
         var decision_factor = this.mainService.returnDecisionFactor();
-        if(decision_factor == false){
+        if(true){ //decision_factor == false
 
 
           this.mainService.getUser()
