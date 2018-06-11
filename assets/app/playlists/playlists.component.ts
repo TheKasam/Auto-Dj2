@@ -42,7 +42,10 @@ export class PlaylistsComponent implements OnInit {
           //set as current playlistfor user
           this.mainService.setSpotifyCodeID(data.autodj_playlist_id,this.name)
             .subscribe(
-              data => {console.log(data)},
+              
+              data => {
+                console.log("setSpotifyCodeID");
+                console.log(data)},
               error => console.error(error)
             );    
             console.log(data);

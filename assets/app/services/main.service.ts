@@ -112,7 +112,7 @@ export class MainService {
         let params = new HttpParams().set("code",spotifyID).set("token",token).set("id",String(userID));
         return this.http.post('http://localhost:3000/user/setSpotifyCodeID', {headers: headers, params: params})
             .map((response: Response) => {
-                return response.json().message})
+                return response.json().obj})
             .catch((error: Response) => Observable.throw(error.json()));
     }
 
@@ -212,7 +212,7 @@ export class MainService {
         let params = new HttpParams().set("accesstoken",accesstoken).set("token",token);
         return this.http.post('http://localhost:3000/spotify/createDJPlaylist', {headers: headers, params: params})
             .map((response: Response) => {
-                return response.json().message})
+                return response.json().autodj_playlist_id})
             .catch((error: Response) => Observable.throw(error.json()));
     }
 
