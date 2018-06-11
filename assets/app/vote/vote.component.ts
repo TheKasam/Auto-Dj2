@@ -85,12 +85,16 @@ export class VoteComponent implements OnInit {
 
           this.mainService.getUser()
           .subscribe(
-            data => {console.log(data);
+            
+            data => {
+              console.log(data);
               this.mainService.playFirstSong(this.accessToken)
               .subscribe(
                 data => console.log(data),
                 error => console.error(error)
-              );},
+              );
+            },
+
             error => console.error(error)
           );
         }

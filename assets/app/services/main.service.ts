@@ -102,6 +102,7 @@ export class MainService {
             .catch((error: Response) => Observable.throw(error.json()));
     }
 
+    //saves auto dj playlist id to user object in db
     setSpotifyCodeID(sId: String, userID: String){
         const headers = new Headers({'Content-Type': 'application/json'});
         const spotifyID = JSON.stringify(sId);
