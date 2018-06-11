@@ -220,7 +220,6 @@ router.post('/playFirstSong', function(req, res, next){
             }, function(err, data) {
     
                 console.log("inside");
-                console.log(err);
                 if (err) {
                     return res.status(500).json({
                         title: 'An error occurred',
@@ -243,7 +242,10 @@ router.post('/playFirstSong', function(req, res, next){
                 console.log("playlistsArray");
     
                 console.log(playlistsArray);
-    
+                
+                // var playurl = "https://open.spotify.com/user/"+userSpotifyID+"/playlist/"+playlist.id;
+                // window.location.href=playurl;
+
                 spotifyApi.addTracksToPlaylist(userSpotifyID, playlist.id, {
                     position : 0
                 }, function(err, data) {
