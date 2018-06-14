@@ -117,6 +117,11 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
                 error: err
             });
         }
+        var newPlaylist = false;
+        if(result.id == '' || result.id != JSON.parse(playlist).id){
+            newPlaylist = true;
+        }
+
         console.log("loggin result", result);
         User.findOne({_id: id}, function(err, user) {
             if (err) {
@@ -126,19 +131,7 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
                 });
             }
             console.log("loggin result2", result);
-            var newPlaylist = false;
-            if(user.current_playlist.id){
-                if(result.id != user.current_playlist.id){
-                    user.current_playlist = result;
-                    newPlaylist = true;
-                }
-                else{
-                    user.current_playlist = result;
-                }
-            }
-            else{
-                user.current_playlist = result;
-            }
+            
             user.current_playlist = result;
             console.log("loggin result3", result);
             user.save(function (err, user) {
