@@ -184,6 +184,7 @@ router.post('/playFirstSong', function(req, res, next){
     console.log(req.body.params.updates);
     var accesstoken = req.body.params.updates[0].value;
     var playlist_id = req.body.params.updates[1].value;
+    var autodj_id = req.body.params.updates[2].value;
 
 
     var client_id = '356fadb6961741c1ba6aac9966edbcbf'; // Your client id
@@ -243,8 +244,7 @@ router.post('/playFirstSong', function(req, res, next){
     
                 console.log(playlistsArray);
                 
-                // var playurl = "https://open.spotify.com/user/"+userSpotifyID+"/playlist/"+playlist.id;
-                // window.location.href=playurl;
+                
 
                 spotifyApi.addTracksToPlaylist(userSpotifyID, playlist.id, {
                     position : 0

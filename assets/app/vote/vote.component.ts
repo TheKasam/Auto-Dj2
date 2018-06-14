@@ -91,7 +91,10 @@ export class VoteComponent implements OnInit {
               console.log(data);
               this.mainService.playFirstSong(this.accessToken)
               .subscribe(
-                data => console.log(data),
+                data => {console.log(data)
+                  var playurl = "https://open.spotify.com/user/"+userSpotifyID+"/playlist/"+playlist.id;
+                  window.location.href=playurl;
+                },
                 error => console.error(error)
               );
             },

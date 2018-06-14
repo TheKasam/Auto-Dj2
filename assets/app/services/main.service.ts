@@ -19,6 +19,7 @@ export class MainService {
     decision_factor = false;
     current_playlist_id = "";
     current_playlist_id2 = "";
+    autodj_playlist_id = "";
     getPlaylists(authId,userId){
         let params = new HttpParams().set("authId",authId).set("userID",userId);
         const headers = new Headers({'Content-Type': 'application/json'});
@@ -173,6 +174,7 @@ export class MainService {
                 console.log("logging user")
                 console.log(user);
                 this.current_playlist_id = user.current_playlist;
+                this.autodj_playlist_id = user.autodj_playlist_id;
                 return user;
             })
             .catch((error: Response) => Observable.throw(error.json()));   
@@ -236,7 +238,7 @@ export class MainService {
         const token = localStorage.getItem('token')
             ? '' + localStorage.getItem('token')
             : '';
-        let params = new HttpParams().set("accesstoken",accesstoken).set("playlistid",this.current_playlist_id);
+        let params = new HttpParams().set("accesstoken",accesstoken).set("playlistid",this.current_playlist_id).set("autodjid",this.autodj_playlist_id);
         return this.http.post('http://localhost:3000/spotify/playFirstSong', {headers: headers, params: params})
               .map((response: Response) => {return response.json().message})
               .catch((error: Response) => Observable.throw(error.json()));
