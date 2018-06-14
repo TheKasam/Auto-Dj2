@@ -130,10 +130,8 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
                     error: err
                 });
             }
-            console.log("loggin result2", result);
             
             user.current_playlist = result;
-            console.log("loggin result3", result);
             user.save(function (err, user) {
                 if (err) {
                     return res.status(500).json({
@@ -144,7 +142,7 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
                 res.status(201).json({
                     message: 'Saved code',
                     playlist_id: result.id,
-                    //decision: newPlaylist
+                    decision: newPlaylist
                 }); 
             });
         });
