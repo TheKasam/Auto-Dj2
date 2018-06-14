@@ -113,7 +113,10 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
     Playlist.findOne({user: id}, function(err, originalPlaylist){
 
     var newPlaylist = false;
-    if( originalPlaylist.id != JSON.parse(playlist).id){
+    if( originalPlaylist == null){
+        newPlaylist = true;
+    }
+    else if (originalPlaylist.id != JSON.parse(playlist).id){
         newPlaylist = true;
     }
     
