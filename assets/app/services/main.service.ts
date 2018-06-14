@@ -240,7 +240,7 @@ export class MainService {
             : '';
         let params = new HttpParams().set("accesstoken",accesstoken).set("playlistid",this.current_playlist_id).set("autodjid",this.autodj_playlist_id);
         return this.http.post('http://localhost:3000/spotify/playFirstSong', {headers: headers, params: params})
-              .map((response: Response) => {return response.json().message})
+              .map((response: Response) => {return response.json()})
               .catch((error: Response) => Observable.throw(error.json()));
           
 

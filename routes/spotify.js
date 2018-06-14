@@ -243,10 +243,10 @@ router.post('/playFirstSong', function(req, res, next){
                 console.log("playlistsArray");
     
                 console.log(playlistsArray);
-                
+                var songid = playlistsArray[0].id
                 
 
-                spotifyApi.addTracksToPlaylist(userSpotifyID, playlist.id, {
+                spotifyApi.addTracksToPlaylist(userSpotifyID, autodj_id, ["spotify:track:"+songid], {
                     position : 0
                 }, function(err, data) {
         
@@ -255,7 +255,9 @@ router.post('/playFirstSong', function(req, res, next){
 
                 res.status(200).json({
                     message: 'Success',
-                    obj: playlistsArray
+                    obj: playlistsArray,
+                    spotifyUserId:userSpotifyID,
+                    autodjid: autodj_id
                 });
             }); // end of spotify get
 
