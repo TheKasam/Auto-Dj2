@@ -83,6 +83,7 @@ export class VoteComponent implements OnInit {
         if(true){ //decision_factor == false
 
 
+          //saves stuff in main.service
           this.mainService.getUser()
           .subscribe(
             
