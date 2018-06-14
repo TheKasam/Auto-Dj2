@@ -110,6 +110,14 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
 
     var decoded = jwt.decode(token);
 
+    Playlist.findOne({user: id}, function(err, originalPlaylist){
+
+    var newPlaylist = false;
+    if( originalPlaylist.id != JSON.parse(playlist).id){
+        newPlaylist = true;
+    }
+    
+
     Playlist.findOneAndUpdate({user: id}, { name: JSON.parse(playlist).name, id:JSON.parse(playlist).id  }, { upsert:true, new: true}, function(err, result){
         if (err) {
             return res.status(500).json({
@@ -117,10 +125,7 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
                 error: err
             });
         }
-        var newPlaylist = false;
-        if(result.id == '' || result.id != JSON.parse(playlist).id){
-            newPlaylist = true;
-        }
+       
 
         console.log("loggin result", result);
         User.findOne({_id: id}, function(err, user) {
@@ -148,6 +153,7 @@ router.post('/setCurrentPlaylist', function (req, res, next) {
         });
         
     });
+});
 });
 
 router.post('/setShareableCode', function (req, res, next) {

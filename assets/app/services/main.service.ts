@@ -83,6 +83,7 @@ export class MainService {
         return this.http.post('http://localhost:3000/user/setCurrentPlaylist', {headers: headers, params: params})
             .map((response: Response) => {
                 this.decision_factor = response.json().decision;
+                console.log("decision",this.decision_factor);
                 this.current_playlist_id = response.json().playlist_id;
                 return response.json().decision})
             .catch((error: Response) => Observable.throw(error.json()));
