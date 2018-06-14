@@ -93,7 +93,7 @@ export class VoteComponent implements OnInit {
               .subscribe(
                 data => {console.log(data)
                   var playurl = "https://open.spotify.com/user/"+data.userSpotifyID+"/playlist/"+data.autodjid;
-                  window.location.href = playurl;
+                  window.open(playurl, "_blank");
                 },
                 error => console.error(error)
               );
