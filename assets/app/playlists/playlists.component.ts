@@ -26,33 +26,7 @@ export class PlaylistsComponent implements OnInit {
   name = "bob";
   playlists: Playlist[];
 
-  update(){
-    var ifCreate = true;
-    for(var i = 0; i < this.playlists.length; i++){
-      if(this.playlists[i].name == "AutoDJPlaylist"){
-        ifCreate = false;
-      }
-    }
-    if(true){ //ifCreate
-      this.mainService.createDJPlaylist(this.accessToken)
-      .subscribe(
-        data => {console.log(data)
-          console.log("updateCurrentPlaylist");
-          console.log(data);
-          //set as current playlistfor user
-          this.mainService.setSpotifyCodeID(data,this.name)
-            .subscribe(
-              
-              data => {
-                console.log("setSpotifyCodeID");
-                console.log(data)},
-              error => console.error(error)
-            );    
-          },
-        error => console.log(error)
-      );
-    }
-  }
+  
 
   async start(){
     await this.getUserId();
@@ -117,6 +91,34 @@ export class PlaylistsComponent implements OnInit {
 
   }
 
+  update(){
+    var ifCreate = true;
+    for(var i = 0; i < this.playlists.length; i++){
+      if(this.playlists[i].name == "AutoDJPlaylist"){
+        ifCreate = false;
+      }
+    }
+    if(true){ //ifCreate
+      this.mainService.createDJPlaylist(this.accessToken)
+      .subscribe(
+        data => {
+          console.log(data)
+          console.log("updateCurrentPlaylist");
+          console.log(data);
+          //set as current playlistfor user
+          this.mainService.setSpotifyCodeID(data,this.name)
+            .subscribe(
+              
+              data => {
+                console.log("setSpotifyCodeID");
+                console.log(data)},
+              error => console.error(error)
+            );    
+          },
+        error => console.log(error)
+      );
+    }
+  }
   // localStorage.setItem('name', name);
 
 }
