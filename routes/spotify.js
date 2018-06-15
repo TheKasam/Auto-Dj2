@@ -252,6 +252,13 @@ router.post('/playFirstSong', function(req, res, next){
         
                 }); // end of addTracksToPlaylist 
 
+                var autoUri = 'spotify:user:'+userSpotifyID+"playlist:"+autodj_id;
+                spotifyApi.play({context_uri: "spotify:user:6220ecortl2kdhvliq37igyil:playlist:"+autodj_id}, 
+                function(err, data) {
+        
+                }); // end of addTracksToPlaylist 
+
+
 
                 res.status(200).json({
                     message: 'Success',

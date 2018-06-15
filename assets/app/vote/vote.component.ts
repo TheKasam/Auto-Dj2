@@ -92,8 +92,8 @@ export class VoteComponent implements OnInit {
               this.mainService.playFirstSong(this.accessToken)
               .subscribe(
                 data => {console.log(data)
-                  var playurl = "https://open.spotify.com/user/"+data.userSpotifyID+"/playlist/"+data.autodjid;
-                  window.open(playurl, "_blank");
+                  // var playurl = "https://open.spotify.com/user/"+data.userSpotifyID+"/playlist/"+data.autodjid;
+                  // window.open(playurl, "_blank");
                 },
                 error => console.error(error)
               );
