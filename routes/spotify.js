@@ -240,20 +240,21 @@ router.post('/playFirstSong', function(req, res, next){
                         name: name
                     });
                 });
+
                 console.log("playlistsArray");
     
                 console.log(playlistsArray);
-                var songid = playlistsArray[0].id
-                
 
+                var songid = playlistsArray[0].id
+                console.log("adding track");
                 spotifyApi.addTracksToPlaylist(userSpotifyID, autodj_id, ["spotify:track:"+songid], {
                     position : 0
                 }, function(err, data) {
-        
+                
                 }); // end of addTracksToPlaylist 
 
                 var autoUri = 'spotify:user:'+userSpotifyID+"playlist:"+autodj_id;
-                spotifyApi.play({context_uri: "spotify:user:6220ecortl2kdhvliq37igyil:playlist:"+autodj_id}, 
+                spotifyApi.play({context_uri: "spotify:user:"+userSpotifyID+":playlist:"+autodj_id}, 
                 function(err, data) {
         
                 }); // end of addTracksToPlaylist 

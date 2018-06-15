@@ -242,12 +242,5 @@ export class MainService {
         return this.http.post('http://localhost:3000/spotify/playFirstSong', {headers: headers, params: params})
               .map((response: Response) => {return response.json()})
               .catch((error: Response) => Observable.throw(error.json()));
-          
-
-
-
-
-
-
         }
 }
