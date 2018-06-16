@@ -43,18 +43,25 @@ export class VoteComponent implements OnInit {
               console.log("access token");
               console.log(data.access_token);
               this.accessToken = data.access_token;
-              this.getCurrentSongs();
+              setTimeout(() => {
+
+                this.getCurrentSongs();
+                this.playFirstSongMethod();        
+                      
+              }, 500);
           },
           error => console.error(error)
       );
   }
 
+ 
   /////////////////:- calling getCurrentSongs Twice
   async getCurrentSongs(){
     await this.getVotes();
-    
     await this.retrieveSongs();
-  
+  }
+
+  async playFirstSongMethod(){
     await this.playFirstSong();
   }
 
