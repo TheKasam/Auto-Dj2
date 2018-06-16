@@ -49,7 +49,7 @@ export class VoteComponent implements OnInit {
       );
   }
 
-  /////////////////:- caling getCruuentSongs Twice
+  /////////////////:- calling getCurrentSongs Twice
   async getCurrentSongs(){
     await this.getVotes();
     
