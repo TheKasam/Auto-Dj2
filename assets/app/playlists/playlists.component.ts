@@ -98,7 +98,7 @@ export class PlaylistsComponent implements OnInit {
         ifCreate = false;
       }
     }
-    if(true){ //ifCreate
+    if(ifCreate){
       this.mainService.createDJPlaylist(this.accessToken)
       .subscribe(
         data => {
