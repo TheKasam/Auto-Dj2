@@ -38,7 +38,8 @@ export class VoteComponent implements OnInit {
 
   //gets the spotify user authentication token
   //sets the authentication token to this.access token
-  //calles getCurrentSongs and playFirstSongMethod
+  //calls getCurrentSongs and playFirstSongMethod
+  
   getToken() {
     console.log(this.name);
     this.mainService.getAccessToken(this.name)
@@ -49,7 +50,9 @@ export class VoteComponent implements OnInit {
               this.accessToken = data.access_token;
               setTimeout(() => {
 
+                //async method that gets current votes for the 3 random songs
                 this.getCurrentSongs();
+                //if users spotify playlists chaged it stats playling the first song from the playlist
                 this.playFirstSongMethod();        
                       
               }, 500);
@@ -59,9 +62,10 @@ export class VoteComponent implements OnInit {
   }
 
  
-  /////////////////:- calling getCurrentSongs Twice
   async getCurrentSongs(){
+    //sets the full object of the three songs to songsFromDB
     await this.getVotes();
+    //if songsFromDB is empty it populates it
     await this.retrieveSongs();
   }
 
@@ -72,18 +76,33 @@ export class VoteComponent implements OnInit {
   getVotes(){
     return new Promise(resolve => {
       setTimeout(() => {
-        this.mainService.getVotes(this.name)
-        .subscribe(
+
+        this.mainService.getVotes(this.name).subscribe(
           data => {
             this.songsFromDB = data;
-            console.log(this.songsFromDB);
           },
           error => console.log(error)
-        );
-
-              
+        ); 
         resolve();
+
       }, 1);
+    });
+  }
+
+  retrieveSongs(){
+    return new Promise(resolve => {
+      setTimeout(() => {
+
+        if(this.songsFromDB.length == 0){
+          this.getSongs(this.accessToken, this.name);
+          resolve();
+        }
+        else{
+          this.current_songs = this.songsFromDB;
+          resolve();
+        }
+
+      }, 500);
     });
   }
 
@@ -93,7 +112,6 @@ export class VoteComponent implements OnInit {
 
         var decision_factor = this.mainService.returnDecisionFactor();
         if(decision_factor == false){ 
-
 
           //saves stuff in main.service
           this.mainService.getUser()
@@ -125,20 +143,7 @@ export class VoteComponent implements OnInit {
     
   }
 
-  retrieveSongs(){
-    return new Promise(resolve => {
-      setTimeout(() => {
-        if(this.songsFromDB.length == 0){
-          this.getSongs(this.accessToken, this.name);
-          resolve();
-        }
-        else{
-          this.current_songs = this.songsFromDB;
-          resolve();
-        }
-      }, 500);
-    });
-  }
+  
 
   randomCodeGenerator(){
     length = 5
