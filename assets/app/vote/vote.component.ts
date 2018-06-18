@@ -34,7 +34,6 @@ export class VoteComponent implements OnInit {
   current_songs: Song[] =[];
   current_songs_from_spotify: Song[] =[];
   getVotesLoopBool = false;
-  already_called = false;
 
   //gets the spotify user authentication token
   //sets the authentication token to this.access token
@@ -69,7 +68,9 @@ export class VoteComponent implements OnInit {
     await this.retrieveSongs();
   }
 
+  //Mark:- This could probabaly be done better
   async playFirstSongMethod(){
+    //playsFirstSong from playlist
     await this.playFirstSong();
   }
 
@@ -113,38 +114,27 @@ export class VoteComponent implements OnInit {
         var decision_factor = this.mainService.returnDecisionFactor();
         if(decision_factor == false){ 
 
-          //saves stuff in main.service
-          this.mainService.getUser()
-          .subscribe(
-            
+          //Saves user details in main.service (configure what is saved in main.service)
+          this.mainService.getUser().subscribe(   
             data => {
-              console.log(data);
-              this.mainService.playFirstSong(this.accessToken)
-              .subscribe(
-                data => {console.log(data)
-                  // var playurl = "https://open.spotify.com/user/"+data.userSpotifyID+"/playlist/"+data.autodjid;
-                  // window.open(playurl, "_blank");
+              //Starts Playing Song From Playlist
+              this.mainService.playFirstSong(this.accessToken).subscribe(
+                data => { console.log(data) // var playurl = "https://open.spotify.com/user/"+data.userSpotifyID+"/playlist/"+data.autodjid;  // window.open(playurl, "_blank");
                 },
                 error => console.error(error)
               );
             },
-
             error => console.error(error)
           );
         }
-        this.already_called = true;
-
-        
-        
         resolve();
+
       }, 1);
     });
-
-    
   }
 
   
-
+  //Generates a Random Code
   randomCodeGenerator(){
     length = 5
     var text = '';
@@ -156,15 +146,12 @@ export class VoteComponent implements OnInit {
     return text;
   }
 
+  //Sets Shareable Code
   setCode(code){
-    //set as current playlistfor user
-    this.mainService.setCode(code,this.name)
-      .subscribe(
+    this.mainService.setCode(code,this.name).subscribe(
         data => console.log(data),
         error => console.error(error)
-      );    
-      console.log(code);
-  
+      );      
   }
 
   getSongs(accessToken,userId){
@@ -223,6 +210,8 @@ export class VoteComponent implements OnInit {
     
   }
   
+
+  //Highlights the song you selected
   buttons = ["white","white","white"]
   setCurrentButton(index){
     var found = false;
@@ -233,12 +222,10 @@ export class VoteComponent implements OnInit {
         found = true
       }
     }
+
     if (found == false){
       this.getCurrentSongs();
-
     }
-    
-
     if (index == 0){
       this.buttons[0] = "green"
       this.buttons[1] = "white"
@@ -256,6 +243,7 @@ export class VoteComponent implements OnInit {
     }
   }
 
+  //Adds 1 to the selected song
   updateVotes(songID,index){
     this.mainService.updateSongVote(songID)
     .subscribe(
@@ -267,6 +255,8 @@ export class VoteComponent implements OnInit {
       error => console.log(error)
     );
   }
+
+  //Subtracts 1 to the selected song
   subtractVote(songID){
     this.mainService.subtractSongVote(songID)
     .subscribe(
@@ -278,6 +268,7 @@ export class VoteComponent implements OnInit {
     );
   }
 
+  //to keep the votes added by other users updated to whats displayed for current user
   getVotesLoop(){
     for(var i=0; i<-1;i++){
       this.mainService.getVotes(this.name)
