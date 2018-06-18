@@ -173,19 +173,14 @@ export class VoteComponent implements OnInit {
       this.songsNumArr.push(i);
     }
     for (var i = 0; i < 3; i++){
-      
-      console.log(this.songsNumArr);
-      var randNum = Math.floor((Math.random() * this.songsNumArr.length) + 0);
-      console.log(randNum);
-      console.log(this.songs[randNum]);
+      var randNum = Math.floor((Math.random() * this.songsNumArr.length) + 0); 
       this.current_songs_from_spotify.push(this.songs[this.songsNumArr[randNum]]);
       this.songsNumArr.splice(randNum,1);   
-    
     }
     this.pushSongs();
-  
   }
 
+  //saves the three selected random songs to the database
   pushSongs(){
     this.mainService.pushToCurrentSongs(this.current_songs_from_spotify[0],this.name)
     .subscribe(
