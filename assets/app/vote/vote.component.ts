@@ -17,7 +17,9 @@ export class VoteComponent implements OnInit {
   constructor(private router: Router, private mainService: MainService) { }
 
   ngOnInit() {
+    //sets the code to be shared with others
     this.setCode(this.code);
+    //gets the spotify user authentication token
     this.getToken();
   }
 
@@ -34,7 +36,9 @@ export class VoteComponent implements OnInit {
   getVotesLoopBool = false;
   already_called = false;
 
-  
+  //gets the spotify user authentication token
+  //sets the authentication token to this.access token
+  //calles getCurrentSongs and playFirstSongMethod
   getToken() {
     console.log(this.name);
     this.mainService.getAccessToken(this.name)
@@ -88,7 +92,7 @@ export class VoteComponent implements OnInit {
       setTimeout(() => {
 
         var decision_factor = this.mainService.returnDecisionFactor();
-        if(true){ //decision_factor == false
+        if(decision_factor == false){ 
 
 
           //saves stuff in main.service
