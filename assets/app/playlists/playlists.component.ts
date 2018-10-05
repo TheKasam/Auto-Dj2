@@ -18,19 +18,19 @@ export class PlaylistsComponent implements OnInit {
   ngOnInit() {
     //async function
     this.start();
-    
+
   }
-  
+
   //Mark:- Variables
   accessToken = "";
   name = "bob";
   playlists: Playlist[];
 
-  
+
 
   async start(){
     await this.getUserId();
-    
+
     await this.getToken();
 
   }
@@ -84,7 +84,7 @@ export class PlaylistsComponent implements OnInit {
               //navigate to vote page
         },
         error => console.error(error)
-      );    
+      );
       console.log(playlist.id);
       //navigate to vote page
       this.router.navigate(['vote']);
@@ -112,7 +112,7 @@ export class PlaylistsComponent implements OnInit {
                 console.log("setSpotifyCodeID");
                 console.log(data)},
               error => console.error(error)
-            );    
+            );
           },
         error => console.log(error)
       );

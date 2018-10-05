@@ -56,7 +56,7 @@ export class MainService {
                         )
                     );
                 }
-                
+
                 return this.songs;
             })
             .catch((error: Response) => Observable.throw(error.json()));
@@ -72,7 +72,7 @@ export class MainService {
     }
 
     updateCurrentPlaylist(playlist: Playlist, userID: String) {
-        
+
         const headers = new Headers({'Content-Type': 'application/json'});
         const playlistStringify = JSON.stringify(playlist);
         const token = localStorage.getItem('token')
@@ -97,7 +97,7 @@ export class MainService {
         const token = localStorage.getItem('token')
             ? '' + localStorage.getItem('token')
             : '';
-        
+
         let params = new HttpParams().set("code",codeStringify).set("token",token).set("id",String(userID));
         return this.http.post('http://localhost:3000/user/setShareableCode', {headers: headers, params: params})
             .map((response: Response) => {
@@ -112,7 +112,7 @@ export class MainService {
         const token = localStorage.getItem('token')
             ? '' + localStorage.getItem('token')
             : '';
-        
+
         let params = new HttpParams().set("spotifyID",spotifyID).set("token",token).set("id",String(userID));
         return this.http.post('http://localhost:3000/user/setSpotifyCodeID', {headers: headers, params: params})
             .map((response: Response) => {
@@ -128,14 +128,14 @@ export class MainService {
         const token = localStorage.getItem('token')
             ? '' + localStorage.getItem('token')
             : '';
-        
+
         let params = new HttpParams().set("song",songStringify).set("token",token).set("id",String(userID));
         return this.http.post('http://localhost:3000/user/pushToCurrentSongs', {headers: headers, params: params})
             .map((response: Response) => {
                 return response.json().message})
             .catch((error: Response) => Observable.throw(error.json()));
     }
-    
+
     getVotes(userID: string){
         console.log("Get votes");
         const token = localStorage.getItem('token')
@@ -157,7 +157,7 @@ export class MainService {
                 }
                 return songsToReturn;
             })
-            .catch((error: Response) => Observable.throw(error.json()));   
+            .catch((error: Response) => Observable.throw(error.json()));
     }
     getUser(){
         console.log("Get User");
@@ -177,7 +177,7 @@ export class MainService {
                 this.autodj_playlist_id = user.autodj_playlist_id;
                 return user;
             })
-            .catch((error: Response) => Observable.throw(error.json()));   
+            .catch((error: Response) => Observable.throw(error.json()));
     }
 
     updateSongVote(songID: string){
@@ -186,7 +186,7 @@ export class MainService {
         const token = localStorage.getItem('token')
             ? '' + localStorage.getItem('token')
             : '';
-        
+
         let params = new HttpParams().set("songID",songID).set("token",token);
         return this.http.post('http://localhost:3000/user/updateVote', {headers: headers, params: params})
             .map((response: Response) => {
@@ -200,7 +200,7 @@ export class MainService {
         const token = localStorage.getItem('token')
             ? '' + localStorage.getItem('token')
             : '';
-        
+
         let params = new HttpParams().set("songID",songID).set("token",token);
         return this.http.post('http://localhost:3000/user/subtractVote', {headers: headers, params: params})
             .map((response: Response) => {
@@ -210,7 +210,7 @@ export class MainService {
 
     createDJPlaylist(accesstoken: string){
         console.log("creating the DJ playlist");
-        const headers = new Headers({'Content-Type': 'application/json'});        
+        const headers = new Headers({'Content-Type': 'application/json'});
         const token = localStorage.getItem('token')
         ? '' + localStorage.getItem('token')
         : '';
@@ -228,13 +228,13 @@ export class MainService {
     playFirstSong(accesstoken: string){
         console.log("playing first song");
 
-     
+
 
         console.log('hide');
         console.log("this.current_playlist_id");
         console.log(this.current_playlist_id);
 
-        const headers = new Headers({'Content-Type': 'application/json'});    
+        const headers = new Headers({'Content-Type': 'application/json'});
         const token = localStorage.getItem('token')
             ? '' + localStorage.getItem('token')
             : '';
