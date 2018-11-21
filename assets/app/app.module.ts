@@ -2,8 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpModule } from "@angular/http";
-import {HttpClientModule} from '@angular/common/http';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule} from '@angular/forms'
 
 
 import { AppComponent } from "./app.component";
@@ -32,7 +33,14 @@ const appRoutes: Routes =  [
         PlaylistsComponent,
         VoteComponent
     ],
-    imports: [BrowserModule, RouterModule.forRoot(appRoutes),HttpModule,HttpClientModule,NgbModule],
+    imports: [
+        BrowserModule, 
+        RouterModule.forRoot(appRoutes),
+        HttpModule,
+        HttpClientModule,
+        NgbModule,
+        FormsModule
+    ],
     providers: [AuthService, MainService],
     bootstrap: [AppComponent]
 })

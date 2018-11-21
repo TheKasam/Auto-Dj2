@@ -40,5 +40,10 @@ export class HomeComponent implements OnInit {
             error => console.error(error)
         );
   }
+
+  //Mark:- Guest Enters Code
+
+  //take input
+  
   
 }
