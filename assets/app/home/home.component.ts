@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../services/auth.service";
+import { MainService } from "../services/main.service";
 import {Router} from '@angular/router';
 
 
@@ -10,7 +11,7 @@ import {Router} from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private mainService: MainService,  private router: Router) { }
 
   ngOnInit() {
     if (this.router.url != "/" && this.router.url != "/home"){
@@ -47,8 +48,10 @@ export class HomeComponent implements OnInit {
   //take input
   onSubmitCode(){
     console.log(this.inputCode);
-    
-    // this.router.navigate(['vote']);
+    //prob: Should this function be made asyc?
+    //prob: Log user out if logged in
+    this.mainService.setGuestCode(this.inputCode);
+    this.router.navigate(['vote']);
 
   }
   
