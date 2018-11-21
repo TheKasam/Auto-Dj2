@@ -3,10 +3,10 @@
   <p class="text">have power over what you listen to</p>
 
   <div class="enter-code">
-    <input id="inputTxt" class="enter-code-input" type="text" placeholder="Enter your Code" >
+    <input id="inputTxt" [(ngModel)]="inputCode" class="enter-code-input" type="text" placeholder="Enter your Code" >
     <br>
     <br>
-    <button class="submit"> Submit </button>
+    <button class="submit" (click)="onSubmitCode()"> Submit </button>
   </div>
 
   <a href="/login" class="hostA">

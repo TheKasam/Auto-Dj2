@@ -42,8 +42,11 @@ export class HomeComponent implements OnInit {
   }
 
   //Mark:- Guest Enters Code
-
+  //Properties
+  inputCode = ''
   //take input
-  
+  onSubmitCode(){
+    console.log(this.inputCode);
+  }
   
 }
