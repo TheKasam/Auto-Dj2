@@ -10,11 +10,9 @@ import {Router} from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  bob = 'bob';
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    console.log("log");
     if (this.router.url != "/" && this.router.url != "/home"){
       this.id = this.router.url.substring(2,this.router.url.length);
       console.log("router url");
@@ -25,6 +23,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  //Executes on init. Used as part of authentication after spotify button is clicked. Spotify returns user code I need to pass to this page to store.
   id: string = "";
   onSubmit(id) {
     console.log(this.id)
