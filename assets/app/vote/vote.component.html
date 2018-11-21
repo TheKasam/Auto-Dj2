@@ -1,5 +1,5 @@
 <div class="container">
-   
+
       <!-- <button class="submits" id='one' type="text" placeholder="" style="text-align: center">asdasd</button>
       <h3 id="twoTxt" class="submit">0</h3>
       <button class="submits" id='two' type="text" placeholder="" style="text-align: center">asdasd</button>
@@ -9,7 +9,8 @@
       <div *ngFor="let song of current_songs; let i = index">
             <h3 id="oneTxt" class="votes">{{song.votes}}</h3>
 
-            <button class="btn" [style.background]="buttons[i]" id='one' type="text" placeholder="" style="text-align: center" (click) = "updateVotes(song.id,i) ">{{song.name}}</button>
+            <button class="btn" [style.background]="buttons[i]" id='one' type="text" placeholder="" style="text-align: center"
+                  (click)="updateVotes(song.id,i) ">{{song.name}}</button>
 
       </div>
       <h1>{{code}}</h1>

@@ -19,17 +19,25 @@ export class VoteComponent implements OnInit {
   ngOnInit() {
     //gets The Guest Code
     this.guestCode = this.mainService.getGuestCode();
-    console.log(this.guestCode);
-    //sets the code to be shared with others
-    this.setCode(this.code);
-    //gets the spotify user authentication token
-    this.getToken();
+
+    if (this.guestCode == ""){
+      //sets the code to be shared with others
+      this.setCode(this.code);
+      //gets the spotify user authentication token
+      this.getToken();
+    } else {
+      this.code = this.guestCode;
+    }
+
   }
 
-  //guest code
+  //guest properties
   guestCode = "";
+
+  //logged user properties
   accessToken = "";
   name = localStorage.getItem('userId');
+
   songsFromDB: Song[];
   code = this.randomCodeGenerator();
   randNum = Math.floor((Math.random() * 3) + 0);
