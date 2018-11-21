@@ -20,13 +20,18 @@ export class VoteComponent implements OnInit {
     //gets The Guest Code
     this.guestCode = this.mainService.getGuestCode();
 
+    //If not guest code
     if (this.guestCode == ""){
       //sets the code to be shared with others
+      this.code = this.randomCodeGenerator();
       this.setCode(this.code);
       //gets the spotify user authentication token
       this.getToken();
     } else {
       this.code = this.guestCode;
+      console.log("this.code");
+      console.log(this.code);
+      this.getCurrentSongs();
     }
 
   }
@@ -39,7 +44,7 @@ export class VoteComponent implements OnInit {
   name = localStorage.getItem('userId');
 
   songsFromDB: Song[];
-  code = this.randomCodeGenerator();
+  code = "";
   randNum = Math.floor((Math.random() * 3) + 0);
   songs: Song[];
   //used to select random songs
@@ -91,9 +96,12 @@ export class VoteComponent implements OnInit {
     return new Promise(resolve => {
       setTimeout(() => {
 
-        this.mainService.getVotes(this.name).subscribe(
+        this.mainService.getVotes(this.code).subscribe(
           data => {
+            
             this.songsFromDB = data;
+            console.log("songsfrom db");
+            console.log(this.songsFromDB);
           },
           error => console.log(error)
         ); 

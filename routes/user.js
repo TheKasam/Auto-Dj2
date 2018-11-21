@@ -46,13 +46,14 @@ router.get('/getSongVote', function(req, res) {
     console.log("loggin gid");
     console.log(id);
 
-    ShareableCode.findOne({user: id}, function(err, code) {
+    ShareableCode.findOne({code: id}, function(err, code) {
       if (err) {
           return res.status(500).json({
               title: 'An error occurred',
               error: err
           });
-      }
+      } 
+      console.log("after error");
 
       Song.find({code: code._id}, function(err, songs) {
     
