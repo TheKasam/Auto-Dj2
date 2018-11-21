@@ -96,6 +96,11 @@ export class MainService {
     }
 
     //Set guest user code
+    getGuestCode(){
+        return this.guestCode;
+    }
+
+    //Set guest user code
     setGuestCode(code: string){
         this.guestCode = code;
     }

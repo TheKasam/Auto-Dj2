@@ -17,12 +17,17 @@ export class VoteComponent implements OnInit {
   constructor(private router: Router, private mainService: MainService) { }
 
   ngOnInit() {
+    //gets The Guest Code
+    this.guestCode = this.mainService.getGuestCode();
+    console.log(this.guestCode);
     //sets the code to be shared with others
     this.setCode(this.code);
     //gets the spotify user authentication token
     this.getToken();
   }
 
+  //guest code
+  guestCode = "";
   accessToken = "";
   name = localStorage.getItem('userId');
   songsFromDB: Song[];
