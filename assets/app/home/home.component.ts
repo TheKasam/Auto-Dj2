@@ -47,8 +47,8 @@ export class HomeComponent implements OnInit {
   //take input
   onSubmitCode(){
     console.log(this.inputCode);
-
-    this.router.navigate(['vote']);
+    
+    // this.router.navigate(['vote']);
 
   }
   

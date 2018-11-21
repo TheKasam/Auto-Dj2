@@ -10,8 +10,8 @@ import { Song } from "../vote/song.model";
 
 @Injectable()
 export class MainService {
-    constructor(private http: Http) {}
 
+    constructor(private http: Http) {}
 
     playlists: Playlist[] = [];
     songs: Song[] = [];
@@ -20,6 +20,10 @@ export class MainService {
     current_playlist_id = "";
     current_playlist_id2 = "";
     autodj_playlist_id = "";
+    //code guest uses to access vote
+    guestCode = "";
+
+    //Gets playlists of logged in user
     getPlaylists(authId,userId){
         let params = new HttpParams().set("authId",authId).set("userID",userId);
         const headers = new Headers({'Content-Type': 'application/json'});
@@ -91,6 +95,12 @@ export class MainService {
             .catch((error: Response) => Observable.throw(error.json()));
     }
 
+    //Set guest user code
+    setGuestCode(code: string){
+        this.guestCode = code;
+    }
+
+    //Sets vote code for current user
     setCode(code: String, userID: String){
         const headers = new Headers({'Content-Type': 'application/json'});
         const codeStringify = JSON.stringify(code);
@@ -159,6 +169,7 @@ export class MainService {
             })
             .catch((error: Response) => Observable.throw(error.json()));
     }
+
     getUser(){
         console.log("Get User");
         const userID: string = localStorage.getItem('userId');
@@ -193,6 +204,7 @@ export class MainService {
                 return response.json().message})
             .catch((error: Response) => Observable.throw(error.json()));
     }
+
     subtractSongVote(songID: string){
         console.log("calling push songs");
 
@@ -227,9 +239,6 @@ export class MainService {
 
     playFirstSong(accesstoken: string){
         console.log("playing first song");
-
-
-
         console.log('hide');
         console.log("this.current_playlist_id");
         console.log(this.current_playlist_id);
