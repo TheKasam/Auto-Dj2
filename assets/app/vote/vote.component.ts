@@ -12,6 +12,7 @@ import { exists } from 'fs';
   templateUrl: './vote.component.html',
   styleUrls: ['./vote.component.css']
 })
+
 export class VoteComponent implements OnInit {
 
   constructor(private router: Router, private mainService: MainService) { }
@@ -266,7 +267,7 @@ export class VoteComponent implements OnInit {
       data => {
         console.log(data);
         
-        this.setCurrentButton(index);
+        // this.setCurrentButton(index);
       },
       error => console.log(error)
     );

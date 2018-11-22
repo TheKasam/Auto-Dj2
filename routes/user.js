@@ -263,10 +263,8 @@ router.post('/updateVote', function (req, res, next){
     console.log("songId");
     console.log(req.body.params.updates[0].value);
     var songId = req.body.params.updates[0].value;
-   
-    var token = req.body.params.updates[1].value;
 
-    var decoded = jwt.decode(token);
+
 
     Song.findOne({_id: songId}, function(err, songToSave) {
         console.log("song to save" ,songToSave);

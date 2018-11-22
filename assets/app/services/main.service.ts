@@ -199,11 +199,9 @@ export class MainService {
     updateSongVote(songID: string){
         console.log("calling push songs");
         const headers = new Headers({'Content-Type': 'application/json'});
-        const token = localStorage.getItem('token')
-            ? '' + localStorage.getItem('token')
-            : '';
 
-        let params = new HttpParams().set("songID",songID).set("token",token);
+
+        let params = new HttpParams().set("songID",songID);
         return this.http.post('http://localhost:3000/user/updateVote', {headers: headers, params: params})
             .map((response: Response) => {
                 return response.json().message})
