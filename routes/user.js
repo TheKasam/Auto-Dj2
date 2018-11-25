@@ -87,6 +87,40 @@ router.get('/getUser', function(req, res) {
     });
 });
 
+router.post('/updateVote', function (req, res, next){
+    console.log("songId");
+    console.log(req.body.params.updates[0].value);
+    var songId = req.body.params.updates[0].value;
+
+
+
+    Song.findOne({_id: songId}, function(err, songToSave) {
+        console.log("song to save" ,songToSave);
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred0',
+                error: err
+            });
+        }
+        songToSave.votes = songToSave.votes + 1
+        songToSave.save(function (err, result) {
+            console.log("logging song", result);
+
+            if (err) {
+                return res.status(500).json({
+                    title: 'An error occurred',
+                    error: err
+                });
+            }            
+            res.status(201).json({
+                message: 'Saved code',
+                obj: result
+            });
+    
+        });
+    });
+});
+
 router.use('/', function (req, res, next) {
     console.log("Start");
     console.log(req.body.params.updates[1].value);
@@ -259,39 +293,7 @@ router.post('/clearCurrentSongs', function (req, res, next) {
     });
 });
 
-router.post('/updateVote', function (req, res, next){
-    console.log("songId");
-    console.log(req.body.params.updates[0].value);
-    var songId = req.body.params.updates[0].value;
 
-
-
-    Song.findOne({_id: songId}, function(err, songToSave) {
-        console.log("song to save" ,songToSave);
-        if (err) {
-            return res.status(500).json({
-                title: 'An error occurred0',
-                error: err
-            });
-        }
-        songToSave.votes = songToSave.votes + 1
-        songToSave.save(function (err, result) {
-            console.log("logging song", result);
-
-            if (err) {
-                return res.status(500).json({
-                    title: 'An error occurred',
-                    error: err
-                });
-            }            
-            res.status(201).json({
-                message: 'Saved code',
-                obj: result
-            });
-    
-        });
-    });
-});
 
 router.post('/subtractVote', function (req, res, next){
     console.log("songId");
