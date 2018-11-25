@@ -267,7 +267,7 @@ export class VoteComponent implements OnInit {
       data => {
         console.log(data);
         
-        // this.setCurrentButton(index);
+        this.setCurrentButton(index);
       },
       error => console.log(error)
     );
